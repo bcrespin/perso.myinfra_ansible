@@ -1,0 +1,56 @@
+---
+- name: https required root directories
+  file: name=/var/www/{{ ansible_host }}/service recurse=yes
+
+- name: Gathering info
+  action: setup
+
+- name: nginx authfile
+  lineinfile: " dest=/var/www/{{ ansible_host}}/service/.htpasswd regexp='{{ item.name }}' line='{{ item.name }}:{{ item.password }}' create=yes  owner=root group=wheel "
+  with_items:
+    - "{{ common_users.brice_apr1_user }}"
+    - "{{ common_users.vickie_apr1_user }}"
+  tags: [  'auth_file' ]
+
+- name: generate nginx self signed cert for default use
+  command: "{{ item }}"
+  args:
+    creates: /etc/ssl/nginx_default_ssl.crt
+  with_items:
+    - "openssl genrsa -out /etc/ssl/private/nginx_default_ssl.key"
+    - "openssl req -new -key /etc/ssl/private/nginx_default_ssl.key -out /etc/ssl/private/nginx_default_ssl.csr -subj '/C=RU/ST=/L=StPetersburg/O=/CN={{ ansible_default_ipv4.address }}' "
+    - "openssl x509 -sha256 -req -days 3650 -in /etc/ssl/private/nginx_default_ssl.csr  -signkey /etc/ssl/private/nginx_default_ssl.key  -out /etc/ssl/nginx_default_ssl.crt"
+
+- name: generate DHE key for nginx
+  command: "openssl dhparam -out /etc/ssl/nginx_dhparam.pem 2048"
+  args:
+    creates: /etc/ssl/nginx_dhparam.pem
+
+- name: generate nginx config
+  copy: content={{ nginx_config }} dest=/etc/nginx/nginx.conf owner=root group=wheel mode=0755
+  register: result
+
+- name: reload nginx
+  service: name=nginx state=reloaded enabled=yes
+  when: result.changed
+  register: result
+
+- name: start nginx
+  service: name=nginx state=started enabled=yes
+  when: ! result.changed
+
+- name: newsyslog.conf config
+  lineinfile:
+    dest: /etc/newsyslog.conf
+    create: yes
+    line: '/var/www/logs/{{ item }}                 640     31      *       $D0     Z " kill -s USR1 `cat /var/run/nginx.pid` "'
+    regexp: '(^/var/www/logs/{{ item }}|^$)'
+  with_items:
+    - "access.log"
+    - "error.log"
+    - "default_ssl_access.log "
+    - "default_ssl_error.log"
+    - "{{ ansible_host }}_ssl_access.log"
+    - "{{ ansible_host }}_ssl_error.log"
+  tags: [ 'newsyslog']
+

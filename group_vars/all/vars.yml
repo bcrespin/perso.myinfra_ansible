@@ -1,0 +1,46 @@
+---
+sshd_banner_enable: 'false'
+sshd_config:
+  PermitRootLogin: 'yes'
+  UseDNS: 'no'
+ntp_config_server : [fw1.home , fw2.home]
+resolv_nameservers:
+  - 171.31.2.129
+  - 172.31.2.130
+resolv_domain: home
+
+acme_client_url: https://github.com/kristapsdz/acme-client/archive/
+acme_client_version: VERSION_0_1_15
+
+openbsd_httpd_config_letsencrypt_only: |
+  # ansible managed, do not edit by hand!
+  #########################################
+  server "default" {
+    listen on * port 80
+    location "/.well-known/acme-challenge/*" {
+      root "/acme"
+      root strip 2
+    }
+  }
+
+openvpn_instance_warrior_port: 51194
+openvpn_instance_home_port: 51193
+lan_openvpn_instance_home_openvpn: '192.168.255.0 255.255.255.240'
+lan_openvpn_instance_home_pf: '192.168.255.0/28'
+lan_openvpn_instance_warrior_openvpn: '192.168.255.16 255.255.255.240'
+lan_openvpn_instance_warrior_pf: '192.168.255.16/28'
+
+common_users: "{{ vault_common_users }}"
+tftp_pxe_images:
+ - { name: "Western Digital Data Lifeguard Diagnostic 5.22" , url: "https://dl.dropboxusercontent.com/u/83439503/iso/wddiag522.img", genre "hardware" }
+ - { name: "Western Digital Data Lifeguard Diagnostic 5.04", url: "https://dl.dropboxusercontent.com/u/83439503/iso/Diag504cCD.iso" , genre: "hardware" }
+ - { name: "Memtest86+ v7.2" , url: "https://dl.dropboxusercontent.com/u/83439503/iso/Memtest86-7.2.iso", genre: "hardware" } 
+ - { name: "mfsBSD 11.0-RELEASE-amd64", url: "http://mfsbsd.vx.sk/files/iso/11/amd64/mfsbsd-11.0-RELEASE-amd64.iso", genre: "os" }
+
+pxe_config:
+  - genre: os
+    - name: a
+      kernel: b
+      append: c
+      url_download: d
+

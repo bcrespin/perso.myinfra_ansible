@@ -1,0 +1,137 @@
+---
+sshd_config:
+  PermitRootLogin: 'yes'
+  UseDNS: 'no'
+resolv_nameservers:
+  - 127.0.0.1
+  - 172.31.2.150
+
+nginx_user: 'www'
+log_format:
+ main: ' ''[$server_name] $remote_addr - $remote_user [$time_local] "$request" ''
+                      ''$status $body_bytes_sent "$http_referer" ''
+                      ''"$http_user_agent" "$http_x_forwarded_for"'' '
+
+nginx_proxy_cache_path:
+  '/var/nginx/freebsd_cache': 'levels=1:2 use_temp_path=off keys_zone=my_cache:10m max_size=2g inactive=180d'
+  '/var/nginx/centos_cache': 'levels=1:2 keys_zone=my_cache_centos:10m max_size=3g inactive=180d use_temp_path=off'
+  '/var/nginx/openbsd_cache': 'levels=1:2 keys_zone=my_cache_openbsd:10m max_size=1g inactive=180d use_temp_path=off'
+  '/var/nginx/puppetlabs_cache': 'levels=1:2 keys_zone=my_cache_puppetlabs:10m max_size=250m inactive=180d use_temp_path=off'
+  '/var/nginx/mtier_cache': 'levels=1:2 keys_zone=my_cache_mtier:10m max_size=1g inactive=180d use_temp_path=off'
+nginx_vhosts:
+  default:
+    listen: '172.31.1.200:80 default_server'
+    server_name: 'bignas'
+    extra_parameters: |
+      listen '172.31.1.200:8080';
+      server_tokens 'off';
+      location '/logs' {
+        autoindex on;
+        root /usr/local/poudriere/data;
+        index  index.html index.htm;
+      }
+      location '/packages' {
+        autoindex on;
+        root /usr/local/poudriere/data;
+        index  index.html index.htm;
+      }
+      location '/pxe' {
+        autoindex on;
+        root    /zSTORAGE1/http_docroot/bignas/internal;
+        index  index.html index.htm;
+      }
+      location '/openwrt' {
+        autoindex on;
+        root    /zSTORAGE1/http_docroot/bignas/internal;
+        index  index.html index.htm;
+      }
+  pkg:
+    listen: '172.31.1.200:80'
+    server_name: 'pkg pkg.home'
+    extra_parameters: |
+      proxy_cache my_cache;
+      proxy_cache_revalidate on;
+      proxy_cache_min_uses 1;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_lock on;
+      proxy_cache_valid 60m;
+      server_tokens 'off';
+      location / {
+        proxy_redirect off;
+        proxy_set_header Host    $host;
+        #include /usr/local/etc/nginx/proxy.conf;
+        proxy_pass http://pkg0.bme.freebsd.org ;
+        location ~ All/(.*)\.txz$ {
+          proxy_redirect off;
+          proxy_set_header Host    $host;
+          proxy_pass http://pkg0.bme.freebsd.org;
+          proxy_ignore_headers Cache-Control;
+        }
+      }	
+  pkg-centos:
+    listen: '172.31.1.200:80'
+    server_name: ' pkg-centos pkg-centos.home'
+    extra_parameters: |
+      proxy_cache my_cache_centos;
+      proxy_cache_revalidate on;
+      proxy_cache_min_uses 1;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_lock on;
+      proxy_cache_valid 60m;
+      server_tokens 'off';
+      location / {
+        proxy_redirect off;
+        proxy_set_header Host    $host;
+        #include /usr/local/etc/nginx/proxy.conf;
+        proxy_pass http://centos.mirrors.ovh.net/ftp.centos.org/;
+      }
+  pkg-openbsd:
+    listen: '172.31.1.200:80'
+    server_name: ' pkg-openbsd pkg-openbsd.home'
+    extra_parameters: |
+      proxy_cache my_cache_openbsd;
+      proxy_cache_revalidate on;
+      proxy_cache_min_uses 1;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_lock on;
+      proxy_cache_valid 60m;
+      server_tokens 'off';
+      location / {
+        proxy_redirect off;
+        #include /usr/local/etc/nginx/proxy.conf;
+        proxy_pass http://ftp.fr.openbsd.org ;
+      }
+  pkg-puppetlabs:
+    listen: '172.31.1.200:80'
+    server_name: ' pkg-puppetlabs pkg-puppetlabs.home'
+    extra_parameters: |
+      proxy_cache my_cache_puppetlabs;
+      proxy_cache_revalidate on;
+      proxy_cache_min_uses 1;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_lock on;
+      proxy_cache_valid 60m;
+      server_tokens 'off';
+      location / {
+        proxy_redirect off;
+        proxy_set_header Host    $host;
+        #include /usr/local/etc/nginx/proxy.conf;
+        proxy_pass http://yum.puppetlabs.com ;
+      }
+  pkg-mtier:
+    listen: '172.31.1.200:80'
+    server_name: ' pkg-mtier pkg-mtier.home'
+    extra_parameters: |
+      proxy_cache my_cache_mtier;
+      proxy_cache_revalidate on;
+      proxy_cache_min_uses 1;
+      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_cache_lock on;
+      proxy_cache_valid 60m;
+      server_tokens 'off';
+      location / {
+        proxy_redirect off;
+        proxy_set_header Host    $host;
+        #include /usr/local/etc/nginx/proxy.conf;
+        proxy_pass https://stable.mtier.org ;
+      }

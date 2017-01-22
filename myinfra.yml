@@ -1,0 +1,67 @@
+---
+- hosts: all
+  tasks:
+     - group_by: key=OS_{{ ansible_os_family }}
+
+- hosts: all
+  gather_facts: False
+  roles:
+    - ansible.motd
+    - ansible.ntp
+    - ansible.sshd
+    - ansible-resolv
+  tags: [ 'common' ]
+
+- hosts: OS_FreeBSD
+  gather_facts: False
+  tasks:
+    - pkgng: name={{ item }} state=present
+      with_items: "{{ my_packages|default('') }}"
+
+    - file: src=/usr/local/bin/bash dest=/bin/bash state=link owner=root group=wheel
+
+- hosts: OS_OpenBSD
+  gather_facts: False
+  tasks:
+    - openbsd_pkg: name={{ item }} state=present
+      with_items: "{{ my_packages|default('') }}"
+
+- hosts: bignas-webgw
+  gather_facts: False
+  roles:
+    - ansible.nginx
+
+- hosts: bignas
+  gather_facts: False
+  roles:
+    - ansible.nginx
+
+- hosts: fw-vip
+  gather_facts: False
+  roles:
+    - ansible.fw-vip
+
+- include: vps_mgmt/playbook.yml
+
+- hosts: new-fw
+  roles:
+    - ansible.bind
+#    - ansible.dhcpd
+#    - ansible.openvpn
+    - ansible.tftp-syslinux
+    - ansible.pf
+  tasks:
+    - name: deploy pxelinux.cfg config
+      git:
+        repo: https://github.com/bcrespin/perso.pxelinux.cfg
+        dest: /tftpboot/pxelinux.cfg
+        force: yes
+      tags: ['tftp']
+    - name: enable tftp service
+      service: name=tftpd state=started enabled=yes
+      tags: ['tftp']
+    - name: create tftp images folder
+      file: path=/tftpboot/images state=directory
+      tags: ['tftp']
+
+

@@ -1,0 +1,25 @@
+---
+- name: fetch vps1 openvpn home client file
+  fetch: src=/etc/openvpn_home/{{ item }}  dest=fetched/openvpn_home_{{ inventory_hostname }}/{{ item }} flat=yes
+  with_items: [ 'client-template.ovpn' ,'keys/ta.key', 'keys/ca.crt','keys/dh2048.pem','keys/issued/home2vps.crt','keys/private/home2vps.key' ]
+
+- name: fetch openvpn home startup script
+  fetch: src=/etc/rc.d/openvpn_home dest=fetched/openvpn_home_{{ inventory_hostname }}/rc_script_openvpn_home flat=yes
+
+- name: fetch vps1 openvpn warrior client file
+  fetch: src=/etc/openvpn_warrior/{{ item }}  dest=fetched/openvpn_warrior_{{ inventory_hostname }}/{{ item }} flat=yes
+  with_items: [ 'client-template.ovpn' ,'keys/ta.key', 'keys/ca.crt','keys/dh2048.pem','keys/issued/brice.crt','keys/private/brice.key','keys/issued/vickie.crt', 'keys/private/vickie.key' ]
+
+- name: temporary selfmade authfile openvpn_warrior
+  lineinfile: " dest=/etc/openvpn_warrior/auth_file regexp='{{ item.name }}' line='{{ item.name }}:{{ item.password }}' create=yes"
+  with_items:
+    - "{{ common_users.brice_apr1_user }}"
+    - "{{ common_users.vickie_apr1_user }}"
+  tags: [ 'auth_file' ]
+
+- name: temporary selfmade authfile openvpn_home
+  lineinfile: " dest=/etc/openvpn_home/auth_file regexp='{{ item.name }}' line='{{ item.name }}:{{ item.password }}' create=yes"
+  with_items:
+    - "{{ common_users.openvpn_home }}"
+  tags: [ 'auth_file' ]
+

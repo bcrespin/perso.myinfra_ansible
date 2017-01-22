@@ -1,0 +1,19 @@
+---
+- name: ensure nfs client mount point exist
+  file: name=/var/www/{{ ansible_host }}/service/transmission-download state=directory
+
+- name: configure nfs exports
+  copy: content={{ nfs_exports }} dest=/etc/exports owner=root group=wheel mode=0644
+  register: result
+
+- name: reload mountd due to nfs change
+  when: result.changed
+  service: name=mountd state=reloaded enabled=yes
+
+- name: start nfs required service
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - [ 'portmap','nfsd', 'mountd']
+
+- name: nfs client mount on localhost
+  mount: name=/var/www/{{ ansible_host }}/service/transmission-download src=127.0.0.1:/var/transmission/Downloads fstype=nfs opts=noatime,ro state=mounted

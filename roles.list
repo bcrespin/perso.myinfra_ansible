@@ -1,0 +1,11 @@
+https://github.com/bcrespin/ansible.motd.git
+https://github.com/bcrespin/ansible.ntp.git
+https://github.com/bcrespin/ansible.openvpn.git
+https://github.com/bcrespin/ansible.pkg_config.git
+https://github.com/ahuffman/ansible-resolv.git
+https://github.com/bcrespin/ansible.sshd.git
+https://github.com/bcrespin/ansible.transmission.git
+https://github.com/bcrespin/ansible.samba.git
+https://github.com/bcrespin/ansible.bind.git
+https://github.com/bcrespin/ansible.dhcpd.git
+https://github.com/bcrespin/ansible.tftp-syslinux.git

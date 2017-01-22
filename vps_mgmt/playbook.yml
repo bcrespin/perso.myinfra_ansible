@@ -1,0 +1,36 @@
+- name: vps additional config
+  hosts: boxemanvps1
+  become: true
+  gather_facts: true
+  roles:
+    - { role: ansible.pf }
+    - { role: ansible.openvpn , openvpn_instance: "{{ openvpn_instance_home}}" , openvpn_instance_name: home , tags: [ 'openvpn' ]}
+    - { role: ansible.openvpn , openvpn_instance: "{{ openvpn_instance_warrior}}" , openvpn_instance_name: warrior , tags: [ 'openvpn' ]}
+    - { role: ansible.transmission , tags: [ 'transmission' ] }
+  tasks:
+    - include: common.yml
+      tags: [ 'common' ]
+
+    - include: openvpn_client.yml  
+      tags: [ 'openvpn', 'openvpn_client' ]
+
+    - include: letsencrypt.yml
+      tags: [ 'letsencrypt' ]
+
+    - include: httpd.yml
+      tags: [ 'httpd' ]
+
+    - include: nfs.yml
+      tags: ['nfs']
+    
+    - include: openup.yml
+      tags: ['openup']   
+   
+    - name: crontab for disk usage
+      cron:
+        name: "run command for disk usage"
+        hour: "*"
+        minute: "*/10"
+        job: "( date > /var/www/{{ ssl_register_domain_name }}/service/disk.txt ); ( df -h |grep -v 127.0.0.1 >> /var/www/{{ ssl_register_domain_name }}/service/disk.txt )"
+      tags: [ 'diskmon']
+

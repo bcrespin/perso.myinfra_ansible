@@ -1,0 +1,6 @@
+vps_mgmt/fetched/*
+roles/*
+tmp/*
+*.retry
+hosts
+.vault_pwd

@@ -1,0 +1,6 @@
+---
+ntp_service_state: 'stopped'
+ntp_service_enabled: 'false'
+sshd_config:
+  PermitRootLogin: 'without-password'
+  UseDNS: 'no'

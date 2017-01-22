@@ -1,0 +1,13 @@
+---
+- name: add users
+  user: name={{ item.value.name }} comment={{ item.value.comment }} groups={{ item.value.groups }}  append=yes password={{ item.value.password }} createhome=yes
+  with_dict: "{{ my_users|default({}) }}"
+  tags: [ 'users' ]
+
+- name: ensure sudo is allowed for wheel group
+  lineinfile: " dest=/etc/sudoers state=present regexp='^%wheel' line='%wheel ALL=(ALL) SETENV: ALL' validate='visudo -cf %s' "
+  tags: [ 'users' ]
+
+#- meta: flush_handlers
+#  tags: [ 'users' ,'pf', 'package' ]
+

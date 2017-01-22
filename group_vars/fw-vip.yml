@@ -1,0 +1,11 @@
+---
+sshd_banner_enable: 'false'
+sshd_config:
+  PermitRootLogin: 'yes'
+  UseDNS: 'no'
+ntp_config_server : ['0.freebsd.pool.ntp.org' , '1.freebsd.pool.ntp.org', '2.freebsd.pool.ntp.org']
+ntp_mode: 'server'
+resolv_nameservers:
+  - 127.0.0.1
+resolv_domain: home
+

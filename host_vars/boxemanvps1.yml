@@ -1,0 +1,234 @@
+---
+ssl_register_domain_name: "{{ ansible_host }}"
+
+my_users:
+  brice: "{{ common_users.brice_openbsd }}"
+  vickie: "{{ common_users.vickie_openbsd }}"
+
+sshd_config:
+  Port: 65522
+  VersionAddendum: "123"
+  PermitRootLogin: without-password
+  UseDNS: 'no'
+sshd_banner_enable: 'false'
+  
+ip_forward_enable: true
+ip_forward_sysctl_value: net.inet.ip.forwarding
+
+ntp_config_server : ['0.freebsd.pool.ntp.org' , '1.freebsd.pool.ntp.org', '2.freebsd.pool.ntp.org']
+
+pkg_config_openbsd_mtier_enable: true
+pkg_config_openbsd_mtier_url: 'https://stable.mtier.org/updates/%c/%a/'
+pkg_config_openbsd_url: 'http://ftp.fr.openbsd.org/pub/OpenBSD/%c/packages/%a/'
+
+resolv_nameservers:
+  - 8.8.8.8
+  - 8.8.4.4
+
+transmission_rpc_white_list: "127.0.0.1,192.168.255.*"
+transmission_blocklist_url: "http://www.wael.name/wael.list.p2p.gz"
+transmission_blocklist_enabled: 'true'
+
+nfs_exports: |
+  /var/transmission/Downloads -ro -network=127.0.0.0 -mask=255.0.0.0
+
+pf_role_enable: True
+pf_ftpproxy_enable: True
+pf_ip_forward_enable: True
+pf_file_content: |
+  # ansible managed, do not edit by hand !
+  ##########################################
+
+  ##macro
+  ################
+  main="vio0"
+  vpn_home="tun0"
+  vpn_warrior="tun1"
+  table <internet-dns> { 8.8.8.8, 8.8.4.4 }
+  table <lan_openvpn_home_site> { 172.31.1.20, 172.31.5.100 }
+  table <bruteforce> persist
+  #  p2p_redirect_ports_host1= "{ 80 , 443 }"
+  #  p2p_redirect_ports_host1= "{ 80 , 443 }"
+  #p2p_host1= "172.31.1.20"
+  openvpn_server_ports= "{ {{ openvpn_instance_warrior_port }} , {{ openvpn_instance_home_port }}  }"
+  p2p_ports_localhost= "{ 55413 }"
+  ssh_port_localhost= 65522
+  http_ports_localhost= "{ 80,443 }"
+
+  ##global
+  ################
+  set skip on lo
+  #em0 is for vagrant stuff
+  set skip on em0
+  match in all scrub (no-df)
+ 
+  #default policy
+  block all
+ 
+  ##nat rules
+  ################
+  match out on $main from any to any nat-to ($main) tagged FROM_VPN
+ 
+  ## rdr rules
+  #pass in quick on $main proto udp from any to $main:0  port $p2p_redirect_udp_ports_host1 rdr-to $p2p_host1 tag REDIRECT_PORT_TO_VPN
+  #pass in quick on $main proto tcp from any to $main:0  port $p2p_redirect_tcp_ports_host1 rdr-to $p2p_host1 tag REDIRECT_PORT_TO_VPN 
+ 
+  ##fw rules
+  ################
+  block in quick from urpf-failed label uRPF
+  block quick from <bruteforce>
+
+  anchor "ftp-proxy/*"
+
+  pass in quick on $vpn_home inet proto tcp from <lan_openvpn_home_site> to ! self port 21 divert-to 127.0.0.1 port 8021
+  pass in quick on $vpn_warrior inet proto tcp from <lan_openvpn_warrior> to ! self port 21 divert-to 127.0.0.1 port 8021
+  pass quick on $vpn_home from <lan_openvpn_home_site> to any tag FROM_VPN
+  pass quick on $vpn_warrior from {{ lan_openvpn_instance_warrior_pf }} to any tag FROM_VPN
+
+  pass in quick on $main proto tcp from any to $main:0 port $ssh_port_localhost  flags S/SA keep state (max-src-conn 6, max-src-conn-rate 6/60,overload <bruteforce> flush global) 
+  
+  pass in quick on $main proto udp from any to $main:0 port $openvpn_server_ports 
+  pass in quick on $main proto icmp from any to  $main:0 icmp-type echoreq 
+
+  pass in quick on $main proto udp from any to $main:0 port $p2p_ports_localhost
+  pass in quick on $main proto tcp from any to $main:0 port $p2p_ports_localhost
+
+  pass in quick on $main proto tcp from any to $main:0 port $http_ports_localhost
+  #enforce policies for outbound interfaces
+  pass out quick on $main tagged FROM_VPN
+  pass quick on $vpn_home tagged REDIRECT_PORT_TO_VPN
+  
+  # firewall is allowed to do all
+  pass out quick from self to any
+
+openvpn_instance_home:
+  openvpn_host: '{{ ansible_host }}'
+  openvpn_auth: 'SHA512'
+  openvpn_dev: tun0
+  openvpn_topology: subnet
+  openvpn_port: '{{ openvpn_instance_home_port }}'
+  openvpn_max_clients: 4
+  openvpn_server: '{{ lan_openvpn_instance_home_openvpn }}'
+  openvpn_use_certs: yes
+  openvpn_clients_certs: [ 'home2vps' ]
+  openvpn_check_username_in_cert: yes
+  openvpn_use_auth_file: yes
+  openvpn_server_options:
+     - "route 172.31.1.20 255.255.255.255"
+     - "route 172.31.5.100 255.255.255.255"
+  openvpn_clients_config:
+   'home2vps':
+     content: |
+       iroute 172.31.1.20 255.255.255.255
+       iroute 172.31.5.100 255.255.255.255
+
+openvpn_instance_warrior:
+  openvpn_auth: 'SHA512'
+  openvpn_host: '{{ ansible_host }}'
+  openvpn_dev: tun1
+  openvpn_topology: subnet
+  openvpn_port: '{{ openvpn_instance_warrior_port }}'
+  openvpn_max_clients: 10
+  openvpn_server: '{{ lan_openvpn_instance_warrior_openvpn }}'
+  openvpn_clients_certs: [ 'brice', 'vickie' ]
+  openvpn_use_certs: yes
+  openvpn_check_username_in_cert: yes
+  openvpn_use_auth_file: yes
+  openvpn_server_options:
+    - 'push "redirect-gateway def1 bypass-dhcp"'
+    - 'push "dhcp-option DNS 8.8.8.8"'
+    - 'push "dhcp-option DNS 8.8.4.4"'
+
+httpd_config: |
+  # ansible managed, do not edit by hand
+  ######################################################
+
+  # we dedicate default is for http only and acme-client
+  include "/etc/http_letsencrypt_only.conf" 
+
+  # 
+  server {{ ansible_host }} {
+    listen on * tls port 443
+
+    tls certificate "/etc/ssl/acme/fullchain.pem"
+    tls key "/etc/ssl/acme/private/privkey.pem"
+
+    root "/var/www/{{ ansible_host }}"
+  } 
+nginx_config: |
+  worker_processes  1;
+  worker_rlimit_nofile 1024;
+  events {
+    worker_connections  800;
+  }
+  http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    index         index.html index.htm;
+    keepalive_timeout  65;
+    server_tokens off;
+    server {
+      # apprt for acme, not used
+      listen       80;
+      server_name  94.242.58.41; 
+      root         /var/www/htdocs;
+      error_page   500 502 503 504  /50x.html;
+      location / {
+        root /var/www/htdocs;
+      }
+      location /.well-known/acme-challenge {
+        rewrite ^/.well-known/acme-challenge(/.*)$ /acme$1 last;
+      }
+    }
+    server {
+      #fucking hole
+      listen 443 ssl default_server;
+      server_name 94.242.58.41;
+      access_log logs/default_ssl_access.log;
+      error_log logs/default_ssl_error.log error;
+      ssl_certificate_key /etc/ssl/private/nginx_default_ssl.key;
+      ssl_certificate /etc/ssl/nginx_default_ssl.crt;
+      return 444;
+    }
+    server {
+      listen 443 ssl http2;
+      server_name {{ ansible_host }};
+      root /var/www/{{ ansible_host }};
+
+      ssl_certificate_key /etc/ssl/acme/private/privkey.pem;
+      ssl_certificate /etc/ssl/acme/fullchain.pem;
+      ssl_protocols TLSv1.2;
+      ssl_ciphers EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH;
+      ssl_prefer_server_ciphers on;
+      ssl_dhparam /etc/ssl/nginx_dhparam.pem;
+      ssl_session_timeout 5m;
+      ssl_session_cache shared:SSL:1m;
+
+      access_log logs/{{ ansible_host }}_ssl_access.log;
+      error_log logs/{{ ansible_host }}_ssl_error.log error;
+
+      location /service/transmission/ {
+        proxy_pass http://127.0.0.1:9091/transmission/ ;
+        proxy_set_header Connection "";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass_header X-Transmission-Session-Id;
+        auth_basic "Restricted";
+        auth_basic_user_file /var/www/{{ ansible_host}}/service/.htpasswd;
+      }
+      
+      location /service/transmission-download/ {
+        auth_basic "Restricted";
+        auth_basic_user_file /var/www/{{ ansible_host}}/service/.htpasswd;
+        autoindex on;
+      }
+
+      location /service/ {
+        auth_basic "Restricted";
+        auth_basic_user_file /var/www/{{ ansible_host}}/service/.htpasswd;
+      }
+      #!!! IMPORTANT !!! We need to hide the password file from prying eyes
+      # This will deny access to any hidden file (beginning with a .period)
+      location ~ /\. { deny  all; }
+    }
+  }
