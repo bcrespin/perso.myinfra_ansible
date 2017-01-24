@@ -31,16 +31,62 @@ lan_openvpn_instance_warrior_openvpn: '192.168.255.16 255.255.255.240'
 lan_openvpn_instance_warrior_pf: '192.168.255.16/28'
 
 common_users: "{{ vault_common_users }}"
-tftp_pxe_images:
- - { name: "Western Digital Data Lifeguard Diagnostic 5.22" , url: "https://dl.dropboxusercontent.com/u/83439503/iso/wddiag522.img", genre "hardware" }
- - { name: "Western Digital Data Lifeguard Diagnostic 5.04", url: "https://dl.dropboxusercontent.com/u/83439503/iso/Diag504cCD.iso" , genre: "hardware" }
- - { name: "Memtest86+ v7.2" , url: "https://dl.dropboxusercontent.com/u/83439503/iso/Memtest86-7.2.iso", genre: "hardware" } 
- - { name: "mfsBSD 11.0-RELEASE-amd64", url: "http://mfsbsd.vx.sk/files/iso/11/amd64/mfsbsd-11.0-RELEASE-amd64.iso", genre: "os" }
 
-pxe_config:
-  - genre: os
-    - name: a
-      kernel: b
-      append: c
-      url_download: d
-
+pxe_images_hardware:
+ - name: "Western Digital Data Lifeguard Diagnostic 5.22"
+   url: "https://dl.dropboxusercontent.com/u/83439503/iso"
+   filename: "wddiag522.img"
+   kernel: memdisk
+   append: iso raw
+   initrd: "pxe_images/wddiag522.img"
+ - name: "Western Digital Data Lifeguard Diagnostic 5.04"
+   url: "https://dl.dropboxusercontent.com/u/83439503/iso"
+   filename: "Diag504cCD.iso"
+   kernel: memdisk
+   append: iso raw
+   initrd: "pxe_images/Diag504cCD.iso"
+ - name: "Memtest86+ v7.2" 
+   url: "https://dl.dropboxusercontent.com/u/83439503/iso"
+   filename: "Memtest86-7.2.iso"
+   kernel: memdisk
+   append: iso raw
+   initrd: "pxe_images/Memtest86-7.2.iso"
+pxe_images_antivirus:
+ - name: "Kaspersky Rescue CD 10 (via BIGNAS)"
+   kernel: "http://bignas:8080/pxe/kaspersky/rescue"
+   append: "initrd=http://bignas:8080/pxe/kaspersky/rescue.igz root=/dev/ram0 cdroot=1 kavlang=en loop=image.squashfs looptype=squashfs realroot=/"
+pxe_images_imaging:
+ - name: "Gparted Live 0.20.0-2amd64 (via BIGNAS)"
+   kernel: "http://bignas:8080/pxe/gparted/live/vmlinuz"
+   append: "initrd=http://bignas:8080/pxe/gparted/live/initrd.img boot=live config union=aufs noswap noprompt vga=788 fetch=http://bignas:8080/pxe/gparted/live/filesystem.squashfs keyboard-layouts=fr locales=us_US.UTF-8"
+ - name: "Clonezilla 20150217amd64 (via BIGNAS)"
+   kernel: "http://bignas:8080/pxe/clonezilla/live/vmlinuz"
+   append: 'initrd=http://bignas:8080/pxe/clonezilla/live/initrd.img boot=live live live-config noswap nolocales edd=on nomodeset ocs_live_run="ocs-live-general" ocs_live_extra_param="" keyboard-layouts=fr locales=us_US.UTF-8 ocs_live_batch="no" vga=788 nosplash noprompt fetch=http://bignas:8080/pxe/clonezilla/live/filesystem.squashfs' 
+pxe_images_os:
+ - name: "mfsBSD 11.0-RELEASE amd64 (user:root pwd:mfsroot)"
+   url: "http://mfsbsd.vx.sk/files/iso/11/amd64"
+   filename: "mfsbsd-11.0-RELEASE-amd64.iso"
+   kernel: "memdisk"
+   append: "raw initrd=pxe_images/mfsbsd-11.0-RELEASE-amd64.iso iso"
+ - name: "Openelec 6.0.3 (Installation)"
+   kernel: "http://bignas:8080/pxe/openelec/v6/target/KERNEL"
+   append: "ip=dhcp boot=NFS=172.31.1.200:/zSTORAGE1/http_docroot/internal/pxe/openelec/v6/target installer tty"
+ - name: "Ubuntu Desktop 12.04LTS (Live/Installer)"
+   kernel: "http://bignas:8080/pxe/ubuntu1204lts/casper/vmlinuz.efi"
+   append: "root=/dev/nfs boot=casper netboot=nfs nfsroot=172.31.1.200:/zSTORAGE1/http_docroot/internal/pxe/ubuntu1204lts initrd=http://bignas:8080/pxe/ubuntu1204lts/casper/initrd.lz keyboard-layouts=fr"
+ - name: "System Rescue CD 4.1.0 (Live)"
+   kernel: "http://bignas:8080/pxe/srcd/rescue32"
+   append: "setkmap=fr netboot=http://bignas:8080/pxe/srcd/sysrcd.dat initrd=images/srcd/initram.igz"
+ - name: "Windows 7/8.1 (Installation)"
+   kernel: "memdisk"
+   inird: "http://bignas:8080/pxe/winpex86/winpe_x86.iso"
+   append: "iso raw"
+ - name: "ESXi 5.5 update 2 (Installation)"
+   kernel: "memdisk"
+   initrd: "http://bignas:8080/pxe/esxi55.iso raw iso"
+ - name: "ESXi 6.0 (Installation)"
+   kernel: "memdisk"
+   initrd: "http://bignas:8080/pxe/esxi6.iso raw iso"
+ - name: "CentOS 7 x64 (Installation Kickstart)"
+   kernel: "http://bignas.home:8080/pxe/centos/7/images/pxeboot/vmlinuz"
+   append: "initrd=http://bignas.home:8080/pxe/centos/7/images/pxeboot/initrd.img ks=http://bignas.home/pxe/centos/anaconda-ks-centos7.cfg"

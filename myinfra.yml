@@ -17,7 +17,6 @@
   tasks:
     - pkgng: name={{ item }} state=present
       with_items: "{{ my_packages|default('') }}"
-
     - file: src=/usr/local/bin/bash dest=/bin/bash state=link owner=root group=wheel
 
 - hosts: OS_OpenBSD
@@ -48,20 +47,5 @@
     - ansible.bind
 #    - ansible.dhcpd
 #    - ansible.openvpn
-    - ansible.tftp-syslinux
+    - ansible.tftp-pxelinux
     - ansible.pf
-  tasks:
-    - name: deploy pxelinux.cfg config
-      git:
-        repo: https://github.com/bcrespin/perso.pxelinux.cfg
-        dest: /tftpboot/pxelinux.cfg
-        force: yes
-      tags: ['tftp']
-    - name: enable tftp service
-      service: name=tftpd state=started enabled=yes
-      tags: ['tftp']
-    - name: create tftp images folder
-      file: path=/tftpboot/images state=directory
-      tags: ['tftp']
-
-

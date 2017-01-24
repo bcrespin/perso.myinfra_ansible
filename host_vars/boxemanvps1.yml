@@ -12,8 +12,8 @@ sshd_config:
   UseDNS: 'no'
 sshd_banner_enable: 'false'
   
-ip_forward_enable: true
-ip_forward_sysctl_value: net.inet.ip.forwarding
+#ip_forward_enable: true
+#ip_forward_sysctl_value: net.inet.ip.forwarding
 
 ntp_config_server : ['0.freebsd.pool.ntp.org' , '1.freebsd.pool.ntp.org', '2.freebsd.pool.ntp.org']
 
