@@ -1,4 +1,15 @@
 ---
+samba_interfaces: 'vmx0'
+samba_additional_settings:
+  - "map to guest = bad user"
+  - "guest account = nobody"
+  - "bind interfaces only = yes"
+samba_shares:
+  - name: tftp
+    path: /tftpboot
+    public: 'yes'
+    readonly: 'yes'
+    guest_ok: 'yes'
 sshd_banner_enable: 'false'
 sshd_config:
   PermitRootLogin: 'yes'
@@ -49,6 +60,8 @@ dhcpd_shared_networks:
       option domain-name-servers 172.31.2.131;
       filename "lpxelinux.0";
 dhcpd_subnets_local:
+  - subnet: "172.31.2.128"
+    netmask: "255.255.255.224"
   - subnet: "172.31.1.0"
     netmask: '255.255.255.0'
     router: '172.31.1.254'
@@ -61,6 +74,45 @@ dhcpd_subnets_local:
         range: '172.31.1.64 172.31.1.96'
       - comment: 'second range'
         range: '172.31.1.210 172.31.1.240'
+  - subnet: "172.31.200.0"
+    netmask: "255.255.255.0"
+    router: "172.31.200.4"
+    pools:
+      - comment: 'range for dmz'
+        range: '172.31.200.100 172.31.200.199'
+dhcpd_hosts:
+  - hostname: 'switch3'
+    ethernet: '10:da:43:07:77:2e'
+    address: '172.31.1.252'
+  - hostname: 'pchc'
+    ethernet: '1c:6f:65:44:d2:38'
+    address: '172.31.1.201'
+  - hostname: 'pc-brice'
+    ethernet: 'e0:cb:4e:25:16:a6'
+    address: '172.31.1.202'
+  - hostname: 'switch1'
+    ethernet: '08:cc:68:47:7d:25'
+    address: '172.31.1.1'
+  - hostname: 'xbox'
+    ethernet: '00:50:f2:8a:35:2e'
+    address: '172.31.1.203'
+  - hostname: 'nuc'
+    address: '172.31.1.205'
+    ethernet:
+      - '00:21:5d:da:9b:88'
+      - 'c8:f7:33:8b:58:F8'
+  - hostname: 'ap01'
+    address: '172.31.1.2'
+    ethernet: '00:18:0a:d4:fa:c0'
+  - hostname: 'ipmi-bignas'
+    address: '172.31.1.4'
+    ethernet: 'bc:5f:f4:fe:54:37'
+  - hostname: "webcam1"
+    ethernet: 'e0:b9:4d:ed:9b:44'
+    address: '172.31.200.11'
+  - hostname: "webcam2"
+    ethernet: 'e0:b9:4d:88:03:9f'
+    address: '172.31.200.12'
 
 zone_home:
   ns:
@@ -73,8 +125,6 @@ zone_home:
 zone_172_31_2_rev:
   records:
     - { name: "131", type: "PTR" , rdata: "fw-gw.home." }
-zone_172_30_0_rev:
-  records: []
 zone_172_30_1_rev:
   records: []
 zone_172_31_1_static_rev:
@@ -147,9 +197,8 @@ bind_zones:
     type: forward
     forwarders: ['172.30.0.11','172.30.0.12']
   - name: "0.30.172.in-addr.arpa"
-    type: master
-    managed: true
-    content: "{{ zone_172_30_0_rev }}"
+    type: forward
+    forwarders: ['172.30.0.11','172.30.0.12']
   - name: "1.30.172.in-addr.arpa"
     type: master
     managed: true
@@ -179,3 +228,22 @@ bind_zones:
     content: "{{ zone_rzp_static_dhcp }}"
     parameters:
       - 'allow-query { none; }'
+openvpn_instance_default:
+  openvpn_auth: 'SHA512'
+  openvpn_host: '{{ ansible_host }}'
+  openvpn_dev: tun0
+  openvpn_topology: subnet
+  openvpn_port: 1193
+  openvpn_max_clients: 10
+  openvpn_server: '172.31.2.64 255.255.255.192'
+  openvpn_clients_certs: [ 'brice' ]
+  openvpn_use_certs: yes
+  openvpn_check_username_in_cert: yes
+  openvpn_use_auth_file: yes
+  openvpn_server_options:
+    - 'push "dhcp-option DNS 172.31.2.131"'
+    - 'push "route 172.31.0.0 255.255.0.0"'
+    - 'push "route 172.30.0.0 255.255.0.0"'
+    - 'push "route 10.99.0.0 255.255.0.0"'
+
+

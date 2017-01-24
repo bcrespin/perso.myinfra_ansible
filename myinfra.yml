@@ -45,7 +45,8 @@
 - hosts: new-fw
   roles:
     - ansible.bind
-#    - ansible.dhcpd
-#    - ansible.openvpn
+    - ansible.dhcpd
+    - ansible.openvpn
     - ansible.tftp-pxelinux
     - ansible.pf
+    - ansible.samba
