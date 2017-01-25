@@ -229,17 +229,22 @@ bind_zones:
     parameters:
       - 'allow-query { none; }'
 openvpn_instance_default:
+  openvpn_clients_fetch_datas: True
   openvpn_auth: 'SHA512'
-  openvpn_host: '{{ ansible_host }}'
+  openvpn_host: '{{ vault_openvpn_host_default }}'
+  openvpn_connection_alias: "{{ vault_openvpn_connection_alias_default }}"
   openvpn_dev: tun0
   openvpn_topology: subnet
   openvpn_port: 1193
+  openvpn_port_nat: 51193
   openvpn_max_clients: 10
   openvpn_server: '172.31.2.64 255.255.255.192'
   openvpn_clients_certs: [ 'brice' ]
   openvpn_use_certs: yes
   openvpn_check_username_in_cert: yes
   openvpn_use_auth_file: yes
+  openvpn_use_auth_file_users:
+    - "{{ vault_common_users.brice_apr1_user }}"
   openvpn_server_options:
     - 'push "dhcp-option DNS 172.31.2.131"'
     - 'push "route 172.31.0.0 255.255.0.0"'

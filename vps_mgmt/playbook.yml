@@ -1,6 +1,5 @@
 - name: vps additional config
   hosts: boxemanvps1
-  become: true
   gather_facts: true
   roles:
     - { role: ansible.pf }
@@ -10,9 +9,6 @@
   tasks:
     - include: common.yml
       tags: [ 'common' ]
-
-    - include: openvpn_client.yml  
-      tags: [ 'openvpn', 'openvpn_client' ]
 
     - include: letsencrypt.yml
       tags: [ 'letsencrypt' ]

@@ -102,6 +102,7 @@ pf_file_content: |
   pass out quick from self to any
 
 openvpn_instance_home:
+  openvpn_clients_fetch_datas: True
   openvpn_host: '{{ ansible_host }}'
   openvpn_auth: 'SHA512'
   openvpn_dev: tun0
@@ -109,10 +110,13 @@ openvpn_instance_home:
   openvpn_port: '{{ openvpn_instance_home_port }}'
   openvpn_max_clients: 4
   openvpn_server: '{{ lan_openvpn_instance_home_openvpn }}'
+  openvpn_connection_alias: "home_{{ ansible_host }}"
   openvpn_use_certs: yes
   openvpn_clients_certs: [ 'home2vps' ]
   openvpn_check_username_in_cert: yes
   openvpn_use_auth_file: yes
+  openvpn_use_auth_file_users:
+    - "{{ vault_common_users.home2vps_apr1_user }}"
   openvpn_server_options:
      - "route 172.31.1.20 255.255.255.255"
      - "route 172.31.5.100 255.255.255.255"
@@ -123,6 +127,7 @@ openvpn_instance_home:
        iroute 172.31.5.100 255.255.255.255
 
 openvpn_instance_warrior:
+  openvpn_clients_fetch_datas: True
   openvpn_auth: 'SHA512'
   openvpn_host: '{{ ansible_host }}'
   openvpn_dev: tun1
@@ -130,10 +135,14 @@ openvpn_instance_warrior:
   openvpn_port: '{{ openvpn_instance_warrior_port }}'
   openvpn_max_clients: 10
   openvpn_server: '{{ lan_openvpn_instance_warrior_openvpn }}'
+  openvpn_connection_alias: "warrior_{{ ansible_host }}"
   openvpn_clients_certs: [ 'brice', 'vickie' ]
   openvpn_use_certs: yes
   openvpn_check_username_in_cert: yes
   openvpn_use_auth_file: yes
+  openvpn_use_auth_file_users:
+    - "{{ vault_common_users.brice_apr1_user }}"
+    - "{{ vault_common_users.vickie_apr1_user }}"
   openvpn_server_options:
     - 'push "redirect-gateway def1 bypass-dhcp"'
     - 'push "dhcp-option DNS 8.8.8.8"'
