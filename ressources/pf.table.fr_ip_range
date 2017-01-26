@@ -1,0 +1,1338 @@
+#France Telecom S.A.
+2.0.0.0/12
+#Ovh Systems
+5.39.0.0/17
+#Bouygues Telecom S.A.
+5.48.0.0/14
+#CEGETEL LA REUNION
+5.57.96.0/19
+#Ovh Systems
+5.135.0.0/16
+#SAS FLOW LINE
+5.149.176.0/20
+#WIBOX SASU
+5.158.240.0/20
+#Mediaserv
+5.187.96.0/19
+#Ajova Network
+5.198.192.0/19
+#HEXANET SAS
+31.29.96.0/19
+#Bouygues Telecom S.A.
+31.32.0.0/13
+#EXTELIA SAS
+31.44.208.0/20
+#
+31.201.0.0/16
+#Les Nouveaux Constructeurs SA
+31.216.16.0/20
+#sas alsatis
+37.1.240.0/20
+#Free Mobile SAS
+37.8.160.0/19
+#ADISTA SAS
+37.18.160.0/20
+#ADISTA SAS
+37.58.128.0/17
+#Ovh Systems
+37.59.0.0/16
+#JRCG INVEST SARL
+37.60.48.0/20
+#SFR
+37.64.0.0/13
+#NordNet
+37.72.192.0/18
+#Ajova Network
+37.77.32.0/20
+#Free Mobile SAS
+37.160.0.0/12
+#WIBOX SASU
+37.220.48.0/20
+#ADISTA SAS
+46.20.160.0/20
+#Les Nouveaux Constructeurs SA
+46.21.112.0/20
+#GALOP TELECOM
+46.21.128.0/20
+#SAS CTS Computers and Telecommunications Systems
+46.21.192.0/20
+#sas alsatis
+46.22.80.0/20
+#720 degres
+46.22.192.0/20
+#MOBIQUITHINGS SAS
+46.23.240.0/20
+#Index Education SAS
+46.33.160.0/19
+#Altitude Telecom SAS
+46.35.0.0/19
+#Ovh Systems
+46.105.0.0/16
+#
+46.136.0.0/16
+#WIBOX SASU
+46.162.128.0/18
+#SFR COLLECTIVITES SA
+46.165.64.0/18
+#Wifirst S.A.S.
+46.192.0.0/15
+#COMPLETEL SAS France
+46.218.0.0/16
+#Mediaserv
+46.238.128.0/18
+#"PROCEAU" s.a.r.l.
+46.252.176.0/20
+#
+57.0.0.0/8
+#ONLINE S.A.S.
+62.4.0.0/19
+#Societe Francaise du Radiotelephone S.A.
+62.8.0.0/19
+#Bouygues Telecom S.A.
+62.34.0.0/15
+#Societe Francaise du Radiotelephone S.A.
+62.39.0.0/16
+#Societe Francaise du Radiotelephone S.A.
+62.62.128.0/17
+#FRANCE CITEVISION SAS
+62.64.32.0/19
+#Axinet Communication sarl
+62.73.0.0/19
+#SFR COLLECTIVITES SA
+62.85.128.0/19
+#SAS CTS Computers and Telecommunications Systems
+62.100.128.0/19
+#ADISTA SAS
+62.102.224.0/19
+#AVENIR TELECOM S.A.
+62.106.64.0/19
+#Societe Francaise du Radiotelephone S.A.
+62.106.128.0/17
+#SIPARTECH Sarl
+62.129.0.0/19
+#NC Numericable S.A.
+62.129.160.0/19
+#Free SAS
+62.147.0.0/16
+#France Telecom S.A.
+62.160.0.0/16
+#France Telecom S.A.
+62.161.0.0/16
+#STELLA NET
+62.193.32.0/19
+#AMEN
+62.193.192.0/18
+#Bouygues Telecom
+62.201.128.0/19
+#ONLINE S.A.S.
+62.210.0.0/16
+#Nerim SAS
+62.212.96.0/19
+#easynet SA
+62.217.0.0/19
+#Azuria
+62.233.32.0/19
+#Claranet France
+62.240.224.0/19
+#NC Numericable S.A.
+62.241.64.0/18
+#BLUEGIX
+62.244.64.0/18
+#SFR COLLECTIVITES SA
+77.84.0.0/16
+#B3G Telecom
+77.104.0.0/18
+#Very Games
+77.111.192.0/18
+#SFR
+77.128.0.0/11
+#Societe Francaise du Radiotelephone S.A.
+77.192.0.0/12
+#SFR COLLECTIVITES SA
+77.233.96.0/19
+#E-TERA
+77.240.192.0/20
+#IP TELECOM
+77.245.128.0/20
+#720 degres
+77.246.80.0/20
+#MOBIUS TECHNOLOGY
+78.108.224.0/20
+#Typhon
+78.109.80.0/20
+#Societe Francaise du Radiotelephone S.A.
+78.112.0.0/12
+#Capaix Connectic
+78.152.128.0/19
+#Altitude Telecom SAS
+78.155.128.0/19
+#SFR COLLECTIVITES SA
+78.159.0.0/19
+#Free SAS
+78.192.0.0/10
+#Societe Francaise du Radiotelephone S.A.
+79.80.0.0/12
+#SFR COLLECTIVITES SA
+79.132.32.0/19
+#Alphalink
+79.141.0.0/20
+#NordNet
+79.141.192.0/20
+#SAS Neo Services
+79.143.128.0/20
+#Absolight
+79.143.240.0/20
+#Altitude Telecom SAS
+79.174.192.0/18
+#France Telecom S.A.
+80.8.0.0/13
+#e-Qual
+80.64.224.0/20
+#Nerim SAS
+80.65.224.0/20
+#Association "Gitoyen"
+80.67.160.0/20
+#Association "Gitoyen"
+80.67.176.0/20
+#MOBIUS TECHNOLOGY
+80.69.208.0/20
+#Altitude Telecom SAS
+80.70.32.0/20
+#Rentabiliweb Telecom
+80.70.208.0/20
+#Oceanet Technology SAS
+80.74.64.0/20
+#Newel Informatique
+80.77.224.0/20
+#ATOS ORIGIN INFOGERANCE
+80.78.0.0/20
+#SM Etude Devel Sces Reseaux Com
+80.82.224.0/20
+#Actimage Consulting SAS
+80.87.224.0/20
+#Rentabiliweb Telecom
+80.89.112.0/20
+#Ikoula Net SAS
+80.93.80.0/20
+#CEGEDIM S.A.
+80.94.176.0/20
+#Societe Francaise du Radiotelephone S.A.
+80.118.0.0/15
+#Societe Francaise du Radiotelephone S.A.
+80.124.0.0/16
+#Societe Francaise du Radiotelephone S.A.
+80.125.0.0/17
+#SFR
+80.125.128.0/18
+#Societe Francaise du Radiotelephone S.A.
+80.125.192.0/18
+#SFR COLLECTIVITES SA
+80.185.0.0/16
+#Bouygues Telecom
+80.214.0.0/15
+#NC Numericable S.A.
+80.236.0.0/17
+#Outremer Telecom
+80.243.240.0/20
+#VIA-NUMERICA
+80.245.16.0/20
+#
+80.245.32.0/20
+#
+80.245.48.0/20
+#NFrance Conseil
+80.247.224.0/20
+#Nerim SAS
+80.248.208.0/20
+#VIVACTION - Groupe ITN France
+80.251.96.0/20
+#Societe Francaise du Radiotelephone S.A.
+81.1.0.0/18
+#Herault Telecom
+81.14.0.0/17
+#SARL MWSP
+81.18.176.0/20
+#NETWORTH TELECOM SA
+81.19.16.0/20
+#NordNet
+81.20.208.0/20
+#HEXANET SAS
+81.23.32.0/20
+#
+81.25.192.0/20
+#BPL Global EMEA SAS
+81.27.16.0/20
+#IMINGO SERVICES
+81.28.96.0/20
+#Kwaoo.com EURL
+81.28.192.0/20
+#France Telecom S.A.
+81.48.0.0/13
+#Free SAS
+81.56.0.0/15
+#NC Numericable S.A.
+81.64.0.0/14
+#France Telecom S.A.
+81.80.0.0/16
+#Witbe
+81.88.96.0/20
+#Ecritel
+81.91.64.0/20
+#ECHO MARQUES
+81.92.80.0/20
+#EMAILVISION
+81.92.112.0/20
+#RISC GROUP IT SOLUTIONS S.A.
+81.93.0.0/20
+#RISC GROUP IT SOLUTIONS S.A.
+81.93.16.0/20
+#
+81.93.176.0/20
+#SAS CTS Computers and Telecommunications Systems
+81.93.240.0/20
+#Societe Francaise du Radiotelephone S.A.
+81.185.0.0/16
+#Renater
+81.194.0.0/16
+#XSALTO
+81.200.32.0/20
+#PUBLICIS-TECHNOLOGY
+81.200.176.0/20
+#Oxymium
+81.201.176.0/20
+#NC Numericable S.A.
+81.220.0.0/16
+#France Telecom S.A.
+81.248.0.0/13
+#Free SAS
+82.64.0.0/14
+#Graal Network S.a.R.L.
+82.96.128.0/18
+#TAS France
+82.97.0.0/18
+#Ozone SAS
+82.98.0.0/18
+#B3G Telecom
+82.101.0.0/18
+#France Telecom S.A.
+82.120.0.0/13
+#
+82.138.64.0/18
+#ONLINE S.A.S.
+82.142.0.0/18
+#SFR COLLECTIVITES SA
+82.151.0.0/19
+#DIGITALVOX s.a.r.l.
+82.196.0.0/20
+#MOBIUS TECHNOLOGY
+82.197.96.0/19
+#NC Numericable S.A.
+82.216.0.0/16
+#Free SAS
+82.224.0.0/11
+#SANEF (Societe des Autoroutes du Nord et de l'Est de la France)
+83.68.96.0/19
+#France Telecom S.A.
+83.112.0.0/14
+#NC Numericable S.A.
+83.141.128.0/17
+#VIAPASS SAS
+83.144.0.0/18
+#COMPLETEL SAS France
+83.145.64.0/18
+#ONLINE S.A.S.
+83.152.0.0/13
+#Neo Telecoms S.A.S.
+83.167.32.0/19
+#Alphalink
+83.167.128.0/19
+#Internet Fr
+83.169.64.0/18
+#HELIANTIS SAS
+83.173.64.0/18
+#France Telecom S.A.
+83.192.0.0/12
+#ONLINE S.A.S.
+83.214.0.0/16
+#Societe Francaise du Radiotelephone S.A.
+84.4.0.0/14
+#
+84.14.0.0/16
+#Eutelsat S.A.
+84.22.64.0/19
+#EASYNET SAS
+84.37.0.0/16
+#Altitude Telecom SAS
+84.55.128.0/18
+#Societe Francaise du Radiotelephone S.A.
+84.96.0.0/13
+#
+84.205.128.0/19
+#AMEN
+85.10.128.0/18
+#Phibee Telecom SARL
+85.12.128.0/18
+#AXIONE S.A.S.
+85.14.128.0/18
+#NC Numericable S.A.
+85.68.0.0/15
+#VIALIS - REGIE MUNICIPALE DE COLMAR
+85.95.192.0/19
+#MEDCOST
+85.116.32.0/19
+#SFR COLLECTIVITES SA
+85.117.128.0/19
+#Lost Oasis SARL
+85.118.32.0/19
+#NC Numericable S.A.
+85.168.0.0/14
+#SFR COLLECTIVITES SA
+85.192.192.0/18
+#
+85.233.192.0/19
+#SprintLink France SAS
+85.237.96.0/19
+#SFR COLLECTIVITES SA
+86.63.224.0/19
+#Societe Francaise du Radiotelephone S.A.
+86.64.0.0/12
+#France Telecom S.A.
+86.192.0.0/10
+#Bouygues Telecom S.A.
+87.88.0.0/14
+#Ovh Systems
+87.98.128.0/17
+#SFR COLLECTIVITES SA
+87.100.0.0/17
+#NC Numericable S.A.
+87.231.0.0/17
+#NC Numericable S.A.
+87.231.128.0/17
+#GALOP TELECOM
+87.240.64.0/18
+#OXYD
+87.252.0.0/19
+#Societe Francaise du Radiotelephone S.A.
+87.255.128.0/19
+#SCGS
+88.86.224.0/19
+#ONLINE S.A.S.
+88.120.0.0/13
+#Societe Francaise du Radiotelephone S.A.
+88.136.0.0/13
+#Free SAS
+88.160.0.0/11
+#SFR COLLECTIVITES SA
+88.219.0.0/16
+#NC Numericable S.A.
+89.2.0.0/15
+#Outremer Telecom
+89.16.0.0/19
+#Bouygues Telecom S.A.
+89.80.0.0/12
+#NC Numericable S.A.
+89.156.0.0/14
+#SFR COLLECTIVITES SA
+89.170.0.0/16
+#Claranet France
+89.185.32.0/19
+#SFR COLLECTIVITES SA
+89.185.160.0/19
+#COMPLETEL SAS France
+89.224.0.0/14
+#MANYONES.COM SARL
+89.234.128.0/18
+#Societe Francaise du Radiotelephone S.A.
+89.237.64.0/18
+#ODISO
+89.248.208.0/20
+#Acropolis Telecom SA
+89.251.48.0/20
+#France Telecom S.A.
+90.0.0.0/9
+#SFR
+91.68.0.0/14
+#SFR COLLECTIVITES SA
+91.88.0.0/16
+#SFR COLLECTIVITES SA
+91.91.0.0/16
+#Ajova Network
+91.109.176.0/20
+#Ovh Systems
+91.121.0.0/16
+#
+91.123.112.0/20
+#Caisse Nationale des Caisses d'Epargne et de Prevoyance
+91.135.176.0/20
+#Veepee SAS
+91.151.48.0/20
+#Conseils et Systemes Informatiques
+91.151.64.0/20
+#Altitude Telecom SAS
+91.151.112.0/20
+#ONLINE S.A.S.
+91.160.0.0/12
+#Ecritel
+91.188.64.0/19
+#SAS CTS Computers and Telecommunications Systems
+91.191.144.0/20
+#ELB multimedia
+92.39.240.0/20
+#Outremer Telecom
+92.49.64.0/18
+#Ozone SAS
+92.61.128.0/20
+#RTLNET
+92.61.160.0/20
+#SFR
+92.88.0.0/13
+#COMPLETEL SAS France
+92.102.0.0/15
+#France Telecom S.A.
+92.128.0.0/10
+#GANDI SAS
+92.243.0.0/19
+#sas alsatis
+92.245.128.0/19
+#Societe Francaise du Radiotelephone S.A.
+93.0.0.0/11
+#Mediaserv
+93.121.128.0/17
+#iBrowse SARL
+93.158.0.0/18
+#MOBIUS TECHNOLOGY
+93.176.0.0/18
+#SFR COLLECTIVITES SA
+93.182.192.0/18
+#Nerim SAS
+93.184.32.0/20
+#Ovh Systems
+94.23.0.0/16
+#Alionis
+94.100.160.0/20
+#SARL GROUPE MIT
+94.103.128.0/20
+#Auvea Ingenierie
+94.140.0.0/19
+#CELESTE
+94.228.176.0/20
+#Bouygues Telecom
+94.238.0.0/15
+#SMARTJOG SAS
+95.81.128.0/18
+#SFR COLLECTIVITES SA
+95.136.128.0/17
+#Mediaserv
+95.138.0.0/17
+#Alphalink
+95.140.0.0/20
+#STELLA NET
+95.141.96.0/20
+#UNIMEDIA-SERVICES
+95.141.112.0/20
+#GANDI SAS
+95.142.160.0/20
+#ARMOR CONNECTIC SAS
+95.157.128.0/18
+#SFR COLLECTIVITES SA
+95.157.192.0/18
+#SFR COLLECTIVITES SA
+95.168.0.0/19
+#BUDGET TELECOM SA
+95.170.0.0/19
+#NordNet
+95.170.32.0/19
+#SFR COLLECTIVITES SA
+95.171.128.0/19
+#SFR COLLECTIVITES SA
+95.174.160.0/19
+#SFR COLLECTIVITES SA
+95.175.160.0/19
+#Herault Telecom
+95.176.0.0/17
+#Societe Francaise du Radiotelephone S.A.
+109.0.0.0/11
+#Outremer Telecom
+109.62.0.0/17
+#AXIONE S.A.S.
+109.74.80.0/20
+#
+109.94.32.0/19
+#NordNet
+109.106.64.0/19
+#CEGETEL LA REUNION
+109.122.128.0/18
+#Ovh Systems
+109.190.0.0/16
+#France Telecom S.A.
+109.208.0.0/12
+#Quant House SAS
+109.236.192.0/20
+#ADISTA SAS
+109.237.240.0/20
+#Ikoula Net SAS
+109.238.0.0/20
+#SAS INTERPC
+109.239.112.0/20
+#NitroServ SARL
+109.239.144.0/20
+#Bouygues Telecom S.A.
+128.78.0.0/15
+#
+128.93.0.0/16
+#ADISTA SAS
+128.127.128.0/20
+#EUTELSAT S.A.
+128.140.128.0/20
+#
+129.20.0.0/16
+#
+129.88.0.0/16
+#
+129.102.0.0/16
+#
+129.104.0.0/16
+#
+129.175.0.0/16
+#
+129.181.0.0/16
+#
+129.182.0.0/16
+#
+129.183.0.0/16
+#
+129.184.0.0/16
+#
+129.185.0.0/16
+#
+129.199.0.0/16
+#ARMOR CONNECTIC SAS
+130.0.96.0/19
+#
+130.66.0.0/16
+#
+130.79.0.0/16
+#
+130.84.0.0/16
+#
+130.98.0.0/16
+#
+130.120.0.0/16
+#
+130.190.0.0/16
+#
+131.254.0.0/16
+#
+132.149.0.0/16
+#
+132.165.0.0/16
+#
+132.166.0.0/16
+#
+132.167.0.0/16
+#
+132.168.0.0/16
+#
+132.169.0.0/16
+#
+132.227.0.0/16
+#
+134.59.0.0/16
+#
+134.157.0.0/16
+#
+134.158.0.0/16
+#
+134.206.0.0/16
+#
+134.212.0.0/16
+#
+134.214.0.0/16
+#
+134.227.0.0/16
+#
+134.246.0.0/16
+#
+137.121.0.0/16
+#
+137.129.0.0/16
+#
+137.194.0.0/16
+#
+138.21.0.0/16
+#
+138.63.0.0/16
+#
+138.96.0.0/16
+#
+138.102.0.0/16
+#
+138.195.0.0/16
+#
+138.231.0.0/16
+#
+139.54.0.0/16
+#
+139.100.0.0/16
+#
+139.124.0.0/16
+#
+139.158.0.0/16
+#
+139.160.0.0/16
+#
+140.77.0.0/16
+#
+140.93.0.0/16
+#
+140.94.0.0/16
+#
+141.115.0.0/16
+#
+141.175.0.0/16
+#
+141.194.0.0/16
+#
+141.227.0.0/16
+#
+143.126.0.0/16
+#
+143.196.0.0/16
+#
+144.56.0.0/16
+#
+144.165.0.0/16
+#
+144.204.0.0/16
+#
+145.226.0.0/16
+#
+145.231.0.0/16
+#
+145.238.0.0/16
+#
+145.240.0.0/16
+#
+145.242.0.0/16
+#
+145.248.0.0/16
+#
+146.19.0.0/16
+#
+146.249.0.0/16
+#
+147.94.0.0/16
+#
+147.98.0.0/16
+#
+147.99.0.0/16
+#
+147.100.0.0/16
+#
+147.127.0.0/16
+#
+147.171.0.0/16
+#
+147.173.0.0/16
+#
+147.196.0.0/16
+#
+147.210.0.0/16
+#
+147.215.0.0/16
+#
+147.250.0.0/16
+#
+148.60.0.0/16
+#Gaz de France
+148.143.0.0/16
+#
+148.169.0.0/16
+#
+149.251.0.0/16
+#
+150.175.0.0/16
+#
+152.77.0.0/16
+#
+152.81.0.0/16
+#
+155.132.0.0/16
+#
+156.18.0.0/16
+#
+156.28.0.0/16
+#
+156.118.0.0/16
+#
+157.23.0.0/16
+#
+157.99.0.0/16
+#
+157.136.0.0/16
+#
+157.159.0.0/16
+#
+157.169.0.0/16
+#
+157.172.0.0/16
+#
+157.243.0.0/16
+#
+158.50.0.0/16
+#
+158.156.0.0/16
+#
+158.190.0.0/16
+#
+158.191.0.0/16
+#
+158.192.0.0/16
+#
+158.231.0.0/16
+#Neo Telecoms S.A.S.
+158.255.96.0/19
+#
+159.31.0.0/16
+#
+159.50.0.0/16
+#
+159.84.0.0/16
+#
+159.95.0.0/16
+#
+159.109.0.0/16
+#
+159.151.0.0/16
+#
+159.173.0.0/16
+#
+159.217.0.0/16
+#
+160.92.0.0/16
+#
+160.103.0.0/16
+#
+160.228.0.0/16
+#
+161.3.0.0/16
+#
+161.48.0.0/16
+#
+161.104.0.0/16
+#
+161.105.0.0/16
+#
+161.106.0.0/16
+#
+162.38.0.0/16
+#
+163.5.0.0/16
+#
+163.9.0.0/16
+#
+163.62.0.0/11
+#
+163.173.0.0/16
+#
+164.1.0.0/16
+#
+164.2.0.0/16
+#
+164.7.0.0/16
+#
+164.60.0.0/16
+#
+164.81.0.0/16
+#
+164.129.0.0/16
+#
+164.131.0.0/16
+#Bouygues Telecom S.A.
+164.177.0.0/17
+#
+171.16.0.0/16
+#
+171.18.0.0/16
+#Ovh Systems
+176.31.0.0/16
+#ARMOR CONNECTIC SAS
+176.52.224.0/20
+#AZNET s.a.r.l.
+176.67.128.0/19
+#
+176.120.128.0/19
+#Bouygues Telecom
+176.128.0.0/10
+#SAS Neo Services
+176.222.48.0/20
+#CELESTE
+178.16.160.0/20
+#Ozone SAS
+178.16.240.0/20
+#SARL MWSP
+178.18.48.0/20
+#SFR COLLECTIVITES SA
+178.18.176.0/20
+#SFR COLLECTIVITES SA
+178.19.0.0/20
+#TUTOR S.A.
+178.19.128.0/20
+#Ovh Systems
+178.32.0.0/15
+#NordNet
+178.73.128.0/18
+#Nerim SAS
+178.132.16.0/20
+#Ikoula Net SAS
+178.170.0.0/17
+#LEONIX TELECOM EURL
+178.208.0.0/19
+#
+178.236.224.0/20
+#Business & Decision Interactive Eolas
+178.237.96.0/20
+#SFR COLLECTIVITES SA
+188.7.0.0/16
+#Altitude Infrastructure Exploitation SAS
+188.73.0.0/18
+#Outremer Telecom
+188.115.64.0/18
+#Alliance Connectic SAS
+188.123.64.0/19
+#SAS CTS Computers and Telecommunications Systems
+188.130.0.0/17
+#SFR COLLECTIVITES SA
+188.141.128.0/17
+#Ovh Systems
+188.165.0.0/16
+#SFR COLLECTIVITES SA
+188.224.0.0/17
+#
+192.70.0.0/19
+#
+192.70.97.0/23
+#
+192.93.0.0/21
+#
+192.93.122.0/19
+#
+192.93.153.0/20
+#
+192.94.175.0/21
+#
+192.134.0.0/16
+#
+192.196.1.0/20
+#Renater
+193.48.0.0/14
+#Renater
+193.52.0.0/16
+#Renater
+193.54.0.0/15
+#
+193.57.184.0/18
+#La Francaise des Jeux
+193.139.0.0/16
+#BT France
+193.149.96.0/19
+#
+193.221.96.0/20
+#
+193.242.1.0/20
+#France Telecom S.A.
+193.248.0.0/14
+#France Telecom S.A.
+193.252.0.0/15
+#France Telecom S.A.
+194.2.0.0/16
+#France Telecom S.A.
+194.3.0.0/16
+#
+194.4.16.0/20
+#
+194.4.40.0/20
+#
+194.4.72.0/20
+#
+194.4.176.0/18
+#
+194.5.108.0/22
+#Societe Francaise du Radiotelephone S.A.
+194.6.128.0/19
+#France Telecom S.A.
+194.51.0.0/18
+#France Telecom S.A.
+194.51.64.0/18
+#France Telecom S.A.
+194.51.128.0/17
+#Renater
+194.57.0.0/16
+#Nerim SAS
+194.79.128.0/19
+#Nerim SAS
+194.79.160.0/19
+#Verizon France SAS
+194.98.0.0/19
+#Verizon France SAS
+194.98.32.0/20
+#Verizon France SAS
+194.98.48.0/20
+#Verizon France SAS
+194.98.64.0/18
+#Verizon France SAS
+194.98.128.0/17
+#Bouygues Telecom S.A.
+194.117.192.0/20
+#Prosodie
+194.117.208.0/20
+#Societe Generale
+194.119.0.0/17
+#ONLINE S.A.S.
+194.149.160.0/19
+#Bouygues Telecom S.A.
+194.158.96.0/19
+#Renater
+194.167.0.0/16
+#
+194.177.32.0/19
+#Societe Francaise du Radiotelephone S.A.
+194.183.192.0/19
+#Renater
+194.199.0.0/16
+#France Telecom S.A.
+194.206.0.0/16
+#Renater
+194.214.0.0/16
+#Societe Francaise du Radiotelephone S.A.
+194.242.160.0/19
+#France Telecom S.A.
+194.250.0.0/16
+#Renater
+194.254.0.0/16
+#Societe Francaise du Radiotelephone S.A.
+195.3.0.0/18
+#Nerim SAS
+195.5.192.0/19
+#Nerim SAS
+195.5.224.0/19
+#France Telecom S.A.
+195.6.0.0/16
+#Altitude Telecom SAS
+195.7.96.0/19
+#France Telecom S.A.
+195.25.0.0/16
+#Bouygues Telecom S.A.
+195.36.128.0/17
+#
+195.42.0.0/18
+#Prosodie
+195.46.192.0/19
+#Renater
+195.83.0.0/19
+#Renater
+195.83.32.0/19
+#Renater
+195.83.64.0/18
+#Renater
+195.83.128.0/17
+#Societe Francaise du Radiotelephone S.A.
+195.98.96.0/19
+#Renater
+195.98.224.0/19
+#France Telecom S.A.
+195.101.0.0/16
+#GL TRADE
+195.110.224.0/19
+#EASYNET SAS
+195.114.64.0/19
+#Societe Francaise du Radiotelephone S.A.
+195.115.0.0/19
+#Societe Francaise du Radiotelephone S.A.
+195.115.32.0/19
+#Societe Francaise du Radiotelephone S.A.
+195.115.64.0/18
+#Societe Francaise du Radiotelephone S.A.
+195.115.128.0/17
+#NC Numericable S.A.
+195.132.0.0/19
+#NC Numericable S.A.
+195.132.32.0/19
+#NC Numericable S.A.
+195.132.64.0/18
+#NC Numericable S.A.
+195.132.128.0/17
+#Societe Francaise du Radiotelephone S.A.
+195.146.192.0/19
+#NordNet
+195.146.224.0/19
+#ONLINE S.A.S.
+195.154.0.0/16
+#COMPLETEL SAS France
+195.167.192.0/20
+#COMPLETEL SAS France
+195.167.224.0/20
+#Ecritel
+195.200.96.0/19
+#PacWan
+195.200.160.0/19
+#Departement De La Haute Savoie
+195.202.0.0/19
+#Renater
+195.220.0.0/16
+#Renater
+195.221.0.0/16
+#COMPLETEL SAS France
+195.248.0.0/19
+#EASYNET SAS
+212.11.0.0/18
+#Netplus Communication
+212.19.160.0/19
+#Societe Francaise du Radiotelephone S.A.
+212.23.160.0/19
+#Groupe IS4
+212.23.192.0/19
+#Free SAS
+212.27.32.0/19
+#Societe Francaise du Radiotelephone S.A.
+212.30.96.0/19
+#Internet Fr
+212.37.192.0/19
+#Altitude Telecom SAS
+212.39.128.0/19
+#Claranet France
+212.43.192.0/19
+#Claranet France
+212.43.224.0/19
+#OC3 NETWORK
+212.44.224.0/19
+#ONLINE S.A.S.
+212.47.224.0/19
+#ADISTA SAS
+212.51.160.0/19
+#ONLINE S.A.S.
+212.62.128.0/18
+#Sage FDC SAS
+212.67.32.0/20
+#Neo Telecoms S.A.S.
+212.69.160.0/19
+#Agelia
+212.78.32.0/19
+#
+212.82.128.0/19
+#ONLINE S.A.S.
+212.83.128.0/19
+#ONLINE S.A.S.
+212.83.160.0/19
+#Neuronnexion
+212.85.128.0/19
+#Societe Francaise du Radiotelephone S.A.
+212.94.160.0/19
+#H.R.Net SARL
+212.94.192.0/19
+#SdV-Plurimedia
+212.95.64.0/19
+#COMPLETEL SAS France
+212.99.0.0/17
+#COMPLETEL SAS France
+212.103.0.0/19
+#Atos Euronext Market Solutions SAS
+212.107.64.0/19
+#BT France
+212.121.160.0/19
+#ONLINE S.A.S.
+212.129.0.0/18
+#Verizon France SAS
+212.155.0.0/16
+#Verizon France SAS
+212.157.0.0/16
+#EASYNET SAS
+212.180.0.0/17
+#Bouygues Telecom S.A.
+212.194.0.0/15
+#Atos Euronext Market Solutions SAS
+212.197.192.0/18
+#NC Numericable S.A.
+212.198.0.0/16
+#Verizon France SAS
+212.208.0.0/17
+#Verizon France SAS
+212.208.128.0/17
+#France Telecom S.A.
+212.234.0.0/16
+#Verizon France SAS
+213.11.0.0/16
+#Mediaserv
+213.16.0.0/19
+#COMPLETEL SAS France
+213.30.128.0/18
+#ONLINE S.A.S.
+213.36.0.0/18
+#ONLINE S.A.S.
+213.36.64.0/18
+#ONLINE S.A.S.
+213.36.128.0/17
+#Nerim SAS
+213.41.128.0/17
+#Bouygues Telecom S.A.
+213.44.0.0/16
+#CEGETEL LA REUNION
+213.55.0.0/18
+#France Telecom S.A.
+213.56.0.0/16
+#Atos Euronext Market Solutions SAS
+213.90.128.0/17
+#Accelance MSP SAS
+213.91.0.0/18
+#
+213.111.0.0/18
+#Societe Francaise du Radiotelephone S.A.
+213.128.32.0/19
+#NordNet
+213.138.0.0/19
+#Prosodie
+213.139.96.0/19
+#Altitude Telecom SAS
+213.144.192.0/19
+#FRANCE CITEVISION SAS
+213.151.160.0/19
+#Neo Telecoms S.A.S.
+213.152.0.0/19
+#INFOCLIP SA
+213.161.192.0/19
+#Accelance MSP SAS
+213.162.32.0/19
+#Kheops Organisation
+213.163.160.0/19
+#VIALIS - REGIE MUNICIPALE DE COLMAR
+213.166.192.0/19
+#NC Numericable S.A.
+213.169.160.0/19
+#HUB TELECOM SA
+213.174.96.0/19
+#SFR COLLECTIVITES SA
+213.176.192.0/19
+#EUTELSAT S.A.
+213.180.224.0/19
+#Ecritel
+213.182.32.0/19
+#Ovh Systems
+213.186.32.0/19
+#Mediaserv
+213.188.160.0/19
+#SAEM Intermediasud
+213.190.64.0/19
+#Societe Francaise du Radiotelephone S.A.
+213.203.64.0/18
+#SMARTJOG SAS
+213.205.96.0/19
+#Nerim SAS
+213.215.0.0/18
+#Ecritel
+213.218.128.0/19
+#Societe Francaise du Radiotelephone S.A.
+213.222.64.0/18
+#Societe Francaise du Radiotelephone S.A.
+213.223.0.0/16
+#SdV-Plurimedia
+213.225.160.0/19
+#Free SAS
+213.228.0.0/18
+#COMPLETEL SAS France
+213.244.0.0/19
+#NC Numericable S.A.
+213.245.0.0/19
+#NC Numericable S.A.
+213.245.32.0/19
+#NC Numericable S.A.
+213.245.64.0/18
+#NC Numericable S.A.
+213.245.128.0/17
+#Ikoula Net SAS
+213.246.32.0/19
+#Ovh Systems
+213.251.128.0/18
+#euclyde
+217.13.48.0/20
+#Alphalink
+217.15.80.0/20
+#AB CONNECT
+217.16.0.0/20
+#LinkByNet S.A.
+217.19.48.0/20
+#Societe Francaise du Radiotelephone S.A.
+217.19.192.0/20
+#GalacSYS
+217.24.80.0/20
+#INFOCLIP SA
+217.25.176.0/20
+#Navlink
+217.26.192.0/20
+#Acropolis Telecom SA
+217.64.48.0/20
+#B3G Telecom
+217.66.112.0/20
+#Ozone SAS
+217.67.144.0/20
+#Equinix France SAS
+217.69.16.0/20
+#SFR
+217.70.80.0/20
+#GANDI SAS
+217.70.176.0/20
+#
+217.71.112.0/20
+#RISC GROUP IT SOLUTIONS S.A.
+217.74.96.0/20
+#
+217.77.224.0/20
+#France Telecom S.A.
+217.108.0.0/15
+#SAS INTERPC
+217.112.48.0/20
+#AFONE
+217.112.64.0/20
+#Societe Francaise du Radiotelephone S.A.
+217.112.224.0/20
+#L'ile aux surfers s.a.r.l.
+217.113.192.0/20
+#Integra France
+217.115.160.0/20
+#
+217.117.144.0/20
+#SprintLink France SAS
+217.118.224.0/20
+#SECR SARL
+217.119.128.0/20
+#AXIONE S.A.S.
+217.119.176.0/20
+#France Telecom S.A.
+217.128.0.0/16
+#COFACE SERVICES
+217.144.112.0/20
+#Axialys SA
+217.146.224.0/20
+#Safety-Host
+217.147.192.0/20
+#SeLoger.com S.A.
+217.151.0.0/20
+#France Telecom S.A.
+217.167.0.0/16
+#SIPA PRESS
+217.168.96.0/20
+#INFOSAT TELECOM S.A.
+217.169.240.0/20
+#AXIONE S.A.S.
+217.171.16.0/20
+#AGARIK SA
+217.174.192.0/20
+#AGARIK SA
+217.174.208.0/20
+#Outremer Telecom
+217.175.160.0/20
+#Outremer Telecom
+217.175.176.0/20
+#KERTEL FRANCE OUTRE MER
+217.194.80.0/20
+#Veepee SAS
+217.195.16.0/20
