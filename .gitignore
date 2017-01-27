@@ -4,3 +4,4 @@ tmp/*
 *.retry
 hosts
 .vault_pwd
+fetched/*

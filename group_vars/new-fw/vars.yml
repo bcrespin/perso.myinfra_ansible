@@ -97,7 +97,7 @@ dhcpd_hosts:
     ethernet:
       - '00:21:5d:da:9b:88'
       - 'c8:f7:33:8b:58:F8'
-  - hostname: 'ap01'
+  - hostname: 'm00180ad4fac0'
     address: '172.31.1.2'
     ethernet: '00:18:0a:d4:fa:c0'
   - hostname: 'ipmi-bignas'
@@ -112,10 +112,11 @@ dhcpd_hosts:
 
 zone_home:
   ns:
-    - { rdata: "fw-gw.home." }
+    - { rdata: "fw3.home." }
 #  mx:
-#    - { priority: 10,  rdata: "fw-gw.home." }
+#    - { priority: 10,  rdata: "fw3.home." }
   records:
+    - { name: "_vlmcs._tcp" , type: SRV , rdata: "10 0 61688 kms-dmz" }
     - { name: "switch1" , type: A , rdata: "172.31.1.1" }
     - { name: "m00180ad4fac0" , type: A , rdata: "172.31.1.2" }
     - { name: "fwasa1" , type: A , rdata: "172.31.1.3" }
@@ -151,11 +152,10 @@ zone_home:
     - { name: "fw-vip" , type: A , rdata: "172.31.2.150" }
     - { name: "fw1" , type: A , rdata: "172.31.2.129" }
     - { name: "fw2" , type: A , rdata: "172.31.2.130" }
-    - { name: "fw-gw" , type: A , rdata: "172.31.2.131" }
+    - { name: "fw3" , type: A , rdata: "172.31.2.131" }
     - { name: "webcam1" , type: A , rdata: "172.31.200.11" }
     - { name: "webcam2" , type: A , rdata: "172.31.200.12" }
     - { name: "kms-dmz" , type: A , rdata: "172.31.200.100" }
-    - { name: "_vlmcs._tcp" , type: SRV , rdata: "10 0 61688 kmz-dmz" }
     - { name: "ap1" , type: CNAME , rdata: "m00180ad4fac0" }
     - { name: "old_aumenucesoir" , type: CNAME , rdata: "jwebphp1" }
     - { name: "pkg-centos" , type: CNAME , rdata: "bignas" }
@@ -163,14 +163,26 @@ zone_home:
     - { name: "pkg-openbsd" , type: CNAME , rdata: "bignas" }
     - { name: "pkg-puppetlabs" , type: CNAME , rdata: "bignas" }
     - { name: "www-aumenucesoir" , type: CNAME , rdata: "bignas" }    
+    - { name: "bignas.nfs" , type: A , rdata: "172.30.1.200" }
+    - { name: "esxi1.nfs" , type: A , rdata: "172.30.1.1" }
+    - { name: "esxi2.nfs" , type: A , rdata: "172.30.1.2" }
+    - { name: "storage1.nfs" , type: A , rdata: "172.30.1.13" }
+
 zone_172_31_2_rev:
   records:
     - { name: "131", type: "PTR" , rdata: "fw-gw.home." }
+
 zone_172_30_1_rev:
-  records: []
+  records:
+    - { name: "200" , type: PTR , rdata: "bignas.nfs.home." }
+    - { name: "1" , type: PTR , rdata: "esxi1.nfs.home." }
+    - { name: "2" , type: PTR , rdata: "esxi2.nfs.home." }
+    - { name: "13" , type: PTR , rdata: "storage1.nfs.home." }
+
 zone_172_31_1_static_rev:
   records:
     - { name: "48", type: "PTR" , rdata: "jwebgw2.home." }
+
 zone_172_31_1_rev: 
   records:
     - { name: "$GENERATE 1-63 $" ,type: CNAME , rdata: "$.static.1.31.172.in-addr.arpa." }
@@ -178,7 +190,9 @@ zone_172_31_1_rev:
     - { name: "$GENERATE 97-209 $" ,type: CNAME , rdata: "$.static.1.31.172.in-addr.arpa." }
     - { name: "$GENERATE 210-240 $" ,type: CNAME, rdata: "$.1.31.172.dhcp.1.31.172.in-addr.arpa." }
     - { name: "$GENERATE 241-254 $" ,type: CNAME , rdata: "$.static.1.31.172.in-addr.arpa." }
+
 zone_rzp_static_dhcp: "{{ vault_zone_rzp_static_dhcp }}"
+
 bind_zone_loopback_v6_enable: False
 bind_dns_fqdn_name: "{{ ansible_host }}"
 bind_hostmaster_name: hostmaster.home
@@ -231,6 +245,10 @@ bind_zones:
     type: master
     managed: true
     content: "{{ zone_home }}"
+  - name: 'mgmt.home'
+    type: stub
+    parameters:
+      - 'masters { 172.30.0.11; 172.30.0.12; }'
   - name: "1.99.10.in-addr.arpa"
     type: forward
     forwarders: ['172.30.0.11','172.30.0.12']
