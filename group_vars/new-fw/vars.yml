@@ -1,4 +1,11 @@
 ---
+tinyproxy_listen: 172.31.2.131
+tinyproxy_bind_same: True
+tinyproxy_allow: ['172.31.1.0/24']
+tinyproxy_disable_via: True
+tinyproxy_loglevel: Critical
+
+my_grp_packages: [ 'tinyproxy--']
 samba_interfaces: 'vmx0'
 samba_additional_settings:
   - "map to guest = bad user"
@@ -22,6 +29,7 @@ resolv_domain: home
 pf_role_enable: True
 pf_ftpproxy_enable: True
 pf_ip_forward_enable: True
+pf_pflogd_enable: True
 pf_file_content: "{{ lookup('file','./ressources/new_fw_pf.conf') }}"
 pf_tables:
   - name: 'some french IPv4 ranges'
@@ -321,7 +329,7 @@ bind_zones:
     content: "{{ zone_rzp_static_dhcp }}"
     parameters:
       - 'allow-query { none; }'
-openvpn_instance_default:
+openvpn_instance_warrior:
   openvpn_clients_fetch_datas: True
   openvpn_auth: 'SHA512'
   openvpn_host: '{{ vault_openvpn_host_default }}'
@@ -343,5 +351,3 @@ openvpn_instance_default:
     - 'push "route 172.31.0.0 255.255.0.0"'
     - 'push "route 172.30.0.0 255.255.0.0"'
     - 'push "route 10.99.0.0 255.255.0.0"'
-
-

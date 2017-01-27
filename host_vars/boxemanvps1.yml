@@ -42,14 +42,15 @@ pf_file_content: |
   ##macro
   ################
   main="vio0"
-  vpn_home="tun0"
-  vpn_warrior="tun1"
+  vpn_home="{{ openvpn_instance_home.openvpn_dev }}"
+  vpn_warrior="{{ openvpn_instance_warrior.openvpn_dev }}"
   table <internet-dns> { 8.8.8.8, 8.8.4.4 }
-  table <lan_openvpn_home_site> { 172.31.1.20, 172.31.5.100 }
+  #  table <lan_openvpn_home_site> { 172.31.1.20, 172.31.5.100 }
+  table <lan_openvpn_home_site> { 172.31.2.131 }
   table <bruteforce> persist
   #  p2p_redirect_ports_host1= "{ 80 , 443 }"
   #  p2p_redirect_ports_host1= "{ 80 , 443 }"
-  #p2p_host1= "172.31.1.20"
+  #  p2p_host1= "172.31.1.20"
   openvpn_server_ports= "{ {{ openvpn_instance_warrior_port }} , {{ openvpn_instance_home_port }}  }"
   p2p_ports_localhost= "{ 55413 }"
   ssh_port_localhost= 65522
@@ -97,7 +98,10 @@ pf_file_content: |
   #enforce policies for outbound interfaces
   pass out quick on $main tagged FROM_VPN
   pass quick on $vpn_home tagged REDIRECT_PORT_TO_VPN
-  
+ 
+  # allow all in vpn_home 
+  pass quick on $vpn_home 
+ 
   # firewall is allowed to do all
   pass out quick from self to any
 
@@ -105,7 +109,7 @@ openvpn_instance_home:
   openvpn_clients_fetch_datas: True
   openvpn_host: '{{ ansible_host }}'
   openvpn_auth: 'SHA512'
-  openvpn_dev: tun0
+  openvpn_dev: tun1
   openvpn_topology: subnet
   openvpn_port: '{{ openvpn_instance_home_port }}'
   openvpn_max_clients: 4
@@ -118,19 +122,17 @@ openvpn_instance_home:
   openvpn_use_auth_file_users:
     - "{{ vault_common_users.home2vps_apr1_user }}"
   openvpn_server_options:
-     - "route 172.31.1.20 255.255.255.255"
-     - "route 172.31.5.100 255.255.255.255"
+     - "route 172.31.2.131 255.255.255.255"
   openvpn_clients_config:
    'home2vps':
      content: |
-       iroute 172.31.1.20 255.255.255.255
-       iroute 172.31.5.100 255.255.255.255
+       iroute 172.31.2.131 255.255.255.255
 
 openvpn_instance_warrior:
   openvpn_clients_fetch_datas: True
   openvpn_auth: 'SHA512'
   openvpn_host: '{{ ansible_host }}'
-  openvpn_dev: tun1
+  openvpn_dev: tun0
   openvpn_topology: subnet
   openvpn_port: '{{ openvpn_instance_warrior_port }}'
   openvpn_max_clients: 10

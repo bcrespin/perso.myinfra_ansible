@@ -1,2 +1,2 @@
 ---
-my_packages: ['bash','git','unzip','zip']
+my_os_packages: ['bash','git','unzip','zip']

@@ -2,9 +2,9 @@
 - hosts: all
   tasks:
      - group_by: key=OS_{{ ansible_os_family }}
+  tags: [ 'pkg' ]
 
 - hosts: all
-  gather_facts: False
   roles:
     - ansible.motd
     - ansible.ntp
@@ -13,17 +13,19 @@
   tags: [ 'common' ]
 
 - hosts: OS_FreeBSD
-  gather_facts: False
   tasks:
     - pkgng: name={{ item }} state=present
-      with_items: "{{ my_packages|default('') }}"
+      with_items: "{{ my_os_packages|default('') }}"
     - file: src=/usr/local/bin/bash dest=/bin/bash state=link owner=root group=wheel
+  tags: [ 'pkg' ]
 
 - hosts: OS_OpenBSD
-  gather_facts: False
   tasks:
     - openbsd_pkg: name={{ item }} state=present
-      with_items: "{{ my_packages|default('') }}"
+      with_items: "{{ my_os_packages|default('') }}"
+    - openbsd_pkg: name={{ item }} state=present
+      with_items: "{{ my_grp_packages|default('') }}"
+  tags: [ 'pkg' ]
 
 - hosts: bignas-webgw
   gather_facts: False
@@ -44,9 +46,59 @@
 
 - hosts: new-fw
   roles:
+    - ansible.tinyproxy
     - ansible.bind
     - ansible.dhcpd
-    - ansible.openvpn
     - ansible.tftp-pxelinux
     - ansible.pf
     - ansible.samba
+    - { role: ansible.openvpn , openvpn_instance: "{{ openvpn_instance_warrior}}" , openvpn_instance_name: warrior  }
+  tasks:
+    - name: create vpn client openvpn home2vps folder
+      file: path=/etc/openvpn_home2vps state=directory owner=root group=_openvpn
+      tags: ['openvpn']
+    - name: copy required files for vpn client openvpn home2vps
+      copy:
+        src: "{{ playbook_dir }}/fetched/openvpn/home2vps/"
+        dest: /etc/openvpn_home2vps/
+        owner: root
+        directory_mode: 750
+        group: _openvpn
+      register: res 
+      tags: ['openvpn']
+
+    - name: detect need update
+      set_fact:
+        update: "{{ true if res.changed else update|default(false) }}"
+
+    - name: generate auth_file.txt for vpn client openvpn home2vps
+      copy:
+        content: "{{ vault_openvpn_client_home2vps_auth_file  }}"
+        dest: /etc/openvpn_home2vps/auth.txt
+        owner: root
+        group: _openvpn
+        mode: 0640
+      tags: ['openvpn']
+      register: res
+
+    - name: detect need update
+      set_fact:
+        update: "{{ true if res.changed else update|default(false) }}"
+
+    - name: copy rc script
+      copy:
+        content: "{{ vault_openvpn_client_home2vps_rc_script }}"
+        dest: /etc/rc.d/openvpn_home2vps
+        owner: root
+        group: wheel
+        mode: 0755
+      tags: ['openvpn']
+      register: res
+
+    - name: detect need update
+      set_fact:
+        update: "{{ true if res.changed else update|default(false) }}"
+
+    - name: manage openvpn home2vps service state
+      service: name=openvpn_home2vps state="{{ 'started' if update|default(false) else 'started' }}" enabled=yes
+      tags: ['openvpn']
