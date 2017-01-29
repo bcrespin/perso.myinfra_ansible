@@ -45,8 +45,8 @@ pf_file_content: |
   vpn_home="{{ openvpn_instance_home.openvpn_dev }}"
   vpn_warrior="{{ openvpn_instance_warrior.openvpn_dev }}"
   table <internet-dns> { 8.8.8.8, 8.8.4.4 }
-  #  table <lan_openvpn_home_site> { 172.31.1.20, 172.31.5.100 }
-  table <lan_openvpn_home_site> { 172.31.2.131 }
+  #  table <lan_openvpn_home_site> { 172.31.1.20 , 172.31.5.100 }
+  table <lan_openvpn_home_site> { 172.31.2.131 , 172.31.1.0/24 }
   table <bruteforce> persist
   #  p2p_redirect_ports_host1= "{ 80 , 443 }"
   #  p2p_redirect_ports_host1= "{ 80 , 443 }"
@@ -123,10 +123,12 @@ openvpn_instance_home:
     - "{{ vault_common_users.home2vps_apr1_user }}"
   openvpn_server_options:
      - "route 172.31.2.131 255.255.255.255"
+     - "route 172.31.1.0 255.255.255.0"
   openvpn_clients_config:
    'home2vps':
      content: |
        iroute 172.31.2.131 255.255.255.255
+       iroute 172.31.1.0 255.255.255.0
 
 openvpn_instance_warrior:
   openvpn_clients_fetch_datas: True

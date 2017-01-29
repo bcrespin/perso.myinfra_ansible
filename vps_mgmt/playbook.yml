@@ -19,9 +19,6 @@
     - include: nfs.yml
       tags: ['nfs']
     
-    - include: openup.yml
-      tags: ['openup']   
-   
     - name: crontab for disk usage
       cron:
         name: "run command for disk usage"

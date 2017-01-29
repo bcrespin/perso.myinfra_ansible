@@ -2,7 +2,7 @@
 - hosts: all
   tasks:
      - group_by: key=OS_{{ ansible_os_family }}
-  tags: [ 'pkg' ]
+  tags: [ 'pkg', 'openup' ]
 
 - hosts: all
   roles:
@@ -10,6 +10,7 @@
     - ansible.ntp
     - ansible.sshd
     - ansible-resolv
+    - ansible.pkg_config
   tags: [ 'common' ]
 
 - hosts: OS_FreeBSD
@@ -23,9 +24,31 @@
   tasks:
     - openbsd_pkg: name={{ item }} state=present
       with_items: "{{ my_os_packages|default('') }}"
+      tags: [ 'pkg' ]
+
     - openbsd_pkg: name={{ item }} state=present
       with_items: "{{ my_grp_packages|default('') }}"
-  tags: [ 'pkg' ]
+      tags: [ 'pkg' ]
+
+    - name: download openup
+      shell: ftp https://stable.mtier.org/openup && chmod 755 /root/openup
+      args:
+        chdir: /root
+        creates: /root/openup
+      tags: ['openup']
+
+    - name: add openup in crontab
+      cron:
+        name: "run openup"
+        hour: "7,18"
+        minute: "5"
+        job: "/root/openup -c"
+      tags: ['openup']
+
+    - name: run openup (if openup_do_update variable is true)
+      shell: /root/openup
+      when: openup_do_update|default(false)
+      tags: ['openup']
 
 - hosts: bignas-webgw
   gather_facts: False

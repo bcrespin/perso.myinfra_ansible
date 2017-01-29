@@ -5,8 +5,10 @@ tinyproxy_allow: ['172.31.1.0/24']
 tinyproxy_disable_via: True
 tinyproxy_loglevel: Critical
 
+pkg_config_openbsd_mtier_enable: True
+
 my_grp_packages: [ 'tinyproxy--']
-samba_interfaces: 'vmx0'
+samba_interfaces: 'em1'
 samba_additional_settings:
   - "map to guest = bad user"
   - "guest account = nobody"
@@ -24,7 +26,7 @@ sshd_config:
 ntp_config_server : ['0.freebsd.pool.ntp.org' , '1.freebsd.pool.ntp.org', '2.freebsd.pool.ntp.org']
 ntp_mode: 'server'
 resolv_nameservers:
-  - 127.0.0.1
+  - 172.31.3.254
 resolv_domain: home
 pf_role_enable: True
 pf_ftpproxy_enable: True
@@ -39,6 +41,8 @@ pf_tables:
     dest: '/etc/pf_tables/pf.table.trusted_public_ip'
     content: "{{ vault_pf_table_trusted_public_ip }}"
 
+dhcpd_global_max_lease_time: 604800
+dhcpd_global_default_lease_time: 432000
 dhcpd_authoritative: true
 dhcpd_keys:
   - key: "ddns-key"
@@ -58,8 +62,6 @@ dhcpd_shared_networks:
   - name: "shared-net"
     subnets: '{{ dhcpd_subnets_local }}' 
     options: |
-      default-lease-time 600;
-      max-lease-time 900;
       option domain-name "home";
       option domain-name-servers 172.31.2.131;
       filename "lpxelinux.0";
@@ -68,7 +70,7 @@ dhcpd_subnets_local:
     netmask: "255.255.255.224"
   - subnet: "172.31.1.0"
     netmask: '255.255.255.0'
-    router: '172.31.1.254'
+    routers: '172.31.1.1'
     options: |
       ddns-domainname "home.dhcp.";
       ddns-rev-domainname "dhcp.1.31.172.in-addr.arpa.";
@@ -80,14 +82,17 @@ dhcpd_subnets_local:
         range: '172.31.1.210 172.31.1.240'
   - subnet: "172.31.200.0"
     netmask: "255.255.255.0"
-    router: "172.31.200.4"
+    routers: "172.31.200.4"
     pools:
       - comment: 'range for dmz'
         range: '172.31.200.100 172.31.200.199'
 dhcpd_hosts:
-  - hostname: 'switch3'
+  - hostname: 'switch2'
     ethernet: '10:da:43:07:77:2e'
     address: '172.31.1.252'
+  - hostname: 'switch3'
+    ethernet: '88:15:44:e3:42:2b'
+    address: '172.31.1.253'
   - hostname: 'pchc'
     ethernet: '1c:6f:65:44:d2:38'
     address: '172.31.1.201'
@@ -117,6 +122,9 @@ dhcpd_hosts:
   - hostname: "webcam2"
     ethernet: 'e0:b9:4d:88:03:9f'
     address: '172.31.200.12'
+  - hostname: "rz800"
+    ethernet: '00:09:b0:db:42:9e'
+    address: '172.31.1.14'
 
 zone_home:
   ns:
@@ -138,6 +146,7 @@ zone_home:
     - { name: "ansible1" , type: A , rdata: "172.31.1.11" }
     - { name: "esxi2-gns3" , type: A , rdata: "172.31.1.12" }
     - { name: "ids1" , type: A , rdata: "172.31.1.13" }
+    - { name: "rz800" , type: A , rdata: "172.31.1.14" }
     - { name: "mon1" , type: A , rdata: "172.31.1.20" }
     - { name: "jgit1" , type: A , rdata: "172.31.1.32" }
     - { name: "jmysql1" , type: A , rdata: "172.31.1.33" }
@@ -155,8 +164,8 @@ zone_home:
     - { name: "pc-brice" , type: A , rdata: "172.31.1.202" }
     - { name: "xbox" , type: A , rdata: "172.31.1.203" }
     - { name: "nuc" , type: A , rdata: "172.31.1.205" }
-    - { name: "switch3" , type: A , rdata: "172.31.1.252" }
-    - { name: "switch2" , type: A , rdata: "172.31.1.253" }
+    - { name: "switch2" , type: A , rdata: "172.31.1.252" }
+    - { name: "switch3" , type: A , rdata: "172.31.1.253" }
     - { name: "fw-vip" , type: A , rdata: "172.31.2.150" }
     - { name: "fw1" , type: A , rdata: "172.31.2.129" }
     - { name: "fw2" , type: A , rdata: "172.31.2.130" }
@@ -166,6 +175,7 @@ zone_home:
     - { name: "kms-dmz" , type: A , rdata: "172.31.200.100" }
     - { name: "ap1" , type: CNAME , rdata: "m00180ad4fac0" }
     - { name: "old_aumenucesoir" , type: CNAME , rdata: "jwebphp1" }
+    - { name: "pkg" , type: CNAME , rdata: "bignas" }
     - { name: "pkg-centos" , type: CNAME , rdata: "bignas" }
     - { name: "pkg-mtier" , type: CNAME , rdata: "bignas" }
     - { name: "pkg-openbsd" , type: CNAME , rdata: "bignas" }
@@ -182,6 +192,12 @@ zone_172_31_2_rev:
     - { name: "130" , type: PTR , rdata: "fw2.home." }
     - { name: "131" , type: PTR , rdata: "fw3.home." }
     - { name: "150" , type: PTR , rdata: "fw-vip.home." }
+
+zone_172_31_200_rev:
+  records:
+    - { name: "100" , type: PTR , rdata: "kmz-dmz.home." }
+    - { name: "11" , type: PTR , rdata: "webcam1.home." }
+    - { name: "12" , type: PTR , rdata: "webcam1.home." }
 
 zone_172_30_1_rev:
   records:
@@ -205,6 +221,7 @@ zone_172_31_1_static_rev:
     - { name: "11" , type: PTR , rdata: "ansible1.home." }
     - { name: "12" , type: PTR , rdata: "esxi2-gns3.home." }
     - { name: "13" , type: PTR , rdata: "ids1.home." }
+    - { name: "14" , type: PTR , rdata: "rz800.home." }
     - { name: "20" , type: PTR , rdata: "mon1.home." }
     - { name: "32" , type: PTR , rdata: "jgit1.home." }
     - { name: "33" , type: PTR , rdata: "jmysql1.home." }
@@ -222,8 +239,8 @@ zone_172_31_1_static_rev:
     - { name: "202" , type: PTR , rdata: "pc-brice.home." }
     - { name: "203" , type: PTR , rdata: "xbox.home." }
     - { name: "205" , type: PTR , rdata: "nuc.home." }
-    - { name: "252" , type: PTR , rdata: "switch3.home." }
-    - { name: "253" , type: PTR , rdata: "switch2.home." }
+    - { name: "252" , type: PTR , rdata: "switch2.home." }
+    - { name: "253" , type: PTR , rdata: "switch3.home." }
 
 zone_172_31_1_rev: 
   records:
@@ -234,17 +251,18 @@ zone_172_31_1_rev:
     - { name: "$GENERATE 241-254 $" ,type: CNAME , rdata: "$.static.1.31.172.in-addr.arpa." }
 
 zone_rzp_static_dhcp: "{{ vault_zone_rzp_static_dhcp }}"
-
+bind_blackhole_malwaredomain_blocklist_url: 'http://mirror2.malwaredomains.com/files/justdomains'
 bind_zone_loopback_v6_enable: False
 bind_dns_fqdn_name: "{{ ansible_host }}"
 bind_hostmaster_name: hostmaster.home
 bind_acls: 
   - name: goodclients
-    addr_list: ['172.16.0.0/16' ,'127.0.0.1','10.0.0.0/8','192.168.0.0/16']
+    addr_list: ['172.16.0.0/12' ,'127.0.0.1','10.0.0.0/8','192.168.0.0/16']
 bind_options_allow_recursion: ['goodclients']
 bind_options_allow_query: ['goodclients']
 bind_options_additionals:
   - 'response-policy { zone "rzp-static-dhcp"; }'
+bind_options_listen_ipv4: [ '127.0.0.1' ,'172.31.2.131']
 bind_logging_channels:
   - name: default
     out: syslog daemon
@@ -280,48 +298,79 @@ bind_zones:
     managed: false
     parameters:
       - 'allow-update { key "ddns-key"; }'
+      - 'also-notify  { 172.31.1.200; }'
+
   - name: 'vmlab.lan'
     type: forward
     forwarders: ['172.30.0.11','172.30.0.12']
+
   - name: 'home'
     type: master
     managed: true
     content: "{{ zone_home }}"
+    parameters:
+      - 'also-notify  { 172.31.1.200; }'
+
   - name: 'mgmt.home'
     type: stub
     parameters:
       - 'masters { 172.30.0.11; 172.30.0.12; }'
+
   - name: "1.99.10.in-addr.arpa"
     type: forward
     forwarders: ['172.30.0.11','172.30.0.12']
+
   - name: "2.99.10.in-addr.arpa"
     type: forward
     forwarders: ['172.30.0.11','172.30.0.12']
+
   - name: "0.30.172.in-addr.arpa"
     type: forward
     forwarders: ['172.30.0.11','172.30.0.12']
+
   - name: "1.30.172.in-addr.arpa"
     type: master
     managed: true
     content: "{{ zone_172_30_1_rev }}"
+    parameters:
+      - 'also-notify  { 172.31.1.200; }'
+
   - name: "2.31.172.in-addr.arpa"
     type: master
     managed: true
     content: "{{ zone_172_31_2_rev }}"
+    parameters:
+      - 'also-notify  { 172.31.1.200; }'
+
   - name: "1.31.172.in-addr.arpa"
     type: master
     managed: true
     content: "{{ zone_172_31_1_rev }}"
+    parameters:
+      - 'also-notify  { 172.31.1.200; }'
+
+  - name: "200.31.172.in-addr.arpa"
+    type: master
+    managed: true
+    content: "{{ zone_172_31_200_rev }}"
+    parameters:
+      - 'also-notify  { 172.31.1.200; }'
+
   - name: "static.1.31.172.in-addr.arpa"
     type: master
     managed: true
     content: "{{ zone_172_31_1_static_rev }}"
+    parameters:
+      - 'also-notify  { 172.31.1.200; }'
+
   - name: "dhcp.1.31.172.in-addr.arpa"
     type: master
     managed: false
     dynamic: true
     parameters:
       - 'allow-update { key "ddns-key"; }'
+      - 'also-notify  { 172.31.1.200; }'
+
   - name: "rzp-static-dhcp"
     type: master
     managed: true
@@ -337,7 +386,7 @@ openvpn_instance_warrior:
   openvpn_dev: tun0
   openvpn_topology: subnet
   openvpn_port: 1193
-  openvpn_port_nat: 51193
+  openvpn_port_nat: 53193
   openvpn_max_clients: 10
   openvpn_server: '172.31.2.64 255.255.255.192'
   openvpn_clients_certs: [ 'brice' ]

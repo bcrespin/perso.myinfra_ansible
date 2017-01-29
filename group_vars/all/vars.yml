@@ -5,8 +5,8 @@ sshd_config:
   UseDNS: 'no'
 ntp_config_server : [fw1.home , fw2.home]
 resolv_nameservers:
-  - 171.31.2.129
-  - 172.31.2.130
+  - 171.31.2.131
+  - 172.31.1.200
 resolv_domain: home
 
 acme_client_url: https://github.com/kristapsdz/acme-client/archive/
