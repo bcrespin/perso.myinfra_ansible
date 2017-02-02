@@ -23,11 +23,10 @@
   when: ssl_register_domain_name is defined
 
 - name: letsencrypt schedule and nginx reload if necessary
-  lineinfile:
-    dest: /etc/daily.local
-    regexp: '^/usr/local/bin/acme-client'
-    line: '/usr/local/bin/acme-client {{ ssl_register_domain_name }} && rcctl reload  nginx'
-    create: yes
-    owner: root
-    group: wheel
-    mode: 0644 
+  cron:
+    name: acme-client for {{ ssl_register_domain_name }}
+    job: "/usr/local/bin/acme-client -C /var/www/htdocs/acme {{ ssl_register_domain_name }} && rcctl reload  nginx"
+    minute: "0"
+    hour: "5"
+    day: "*"
+    month: "*"
