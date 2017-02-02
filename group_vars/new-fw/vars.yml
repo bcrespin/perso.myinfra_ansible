@@ -266,7 +266,7 @@ bind_options_listen_ipv4: [ '127.0.0.1' ,'172.31.2.131']
 bind_logging_channels:
   - name: default
     out: syslog daemon
-    severity: info
+    severity: Error
   - name: update_log
     severity: "info"
     file: 
