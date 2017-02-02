@@ -76,6 +76,7 @@
     - ansible.pf
     - ansible.samba
     - ansible.ddclient
+    - ansible.pf_blockiplist
     - { role: ansible.openvpn , openvpn_instance: "{{ openvpn_instance_warrior}}" , openvpn_instance_name: warrior  }
   tasks:
     - name: create vpn client openvpn home2vps folder
