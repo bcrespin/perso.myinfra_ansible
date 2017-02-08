@@ -8,7 +8,7 @@ tinyproxy_loglevel: Critical
 pkg_config_openbsd_mtier_enable: True
 
 my_grp_packages: [ 'tinyproxy--']
-samba_interfaces: 'em1'
+samba_interfaces: 'vmx1'
 samba_additional_settings:
   - "map to guest = bad user"
   - "guest account = nobody"
@@ -26,7 +26,7 @@ sshd_config:
 ntp_config_server : ['0.freebsd.pool.ntp.org' , '1.freebsd.pool.ntp.org', '2.freebsd.pool.ntp.org']
 ntp_mode: 'server'
 resolv_nameservers:
-  - 172.31.3.254
+  - 127.0.0.1
 resolv_domain: home
 pf_role_enable: True
 pf_ftpproxy_enable: True
@@ -125,6 +125,9 @@ dhcpd_hosts:
   - hostname: "rz800"
     ethernet: '00:09:b0:db:42:9e'
     address: '172.31.1.14'
+  - hostname: "mdmycloudmirror"
+    ethernet: '00:90:a9:ef:0f:ec'
+    address: '172.31.1.13'
 
 zone_home:
   ns:
@@ -145,7 +148,7 @@ zone_home:
     - { name: "log1" , type: A , rdata: "172.31.1.10" }
     - { name: "ansible1" , type: A , rdata: "172.31.1.11" }
     - { name: "esxi2-gns3" , type: A , rdata: "172.31.1.12" }
-    - { name: "ids1" , type: A , rdata: "172.31.1.13" }
+    - { name: "wdmycloudmirror" , type: A , rdata: "172.31.1.13" }
     - { name: "rz800" , type: A , rdata: "172.31.1.14" }
     - { name: "mon1" , type: A , rdata: "172.31.1.20" }
     - { name: "jgit1" , type: A , rdata: "172.31.1.32" }
@@ -220,7 +223,7 @@ zone_172_31_1_static_rev:
     - { name: "10" , type: PTR , rdata: "log1.home." }
     - { name: "11" , type: PTR , rdata: "ansible1.home." }
     - { name: "12" , type: PTR , rdata: "esxi2-gns3.home." }
-    - { name: "13" , type: PTR , rdata: "ids1.home." }
+    - { name: "13" , type: PTR , rdata: "wdmycloudmirror.home." }
     - { name: "14" , type: PTR , rdata: "rz800.home." }
     - { name: "20" , type: PTR , rdata: "mon1.home." }
     - { name: "32" , type: PTR , rdata: "jgit1.home." }
