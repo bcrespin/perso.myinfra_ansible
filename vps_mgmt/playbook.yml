@@ -3,6 +3,7 @@
   gather_facts: true
   roles:
     - { role: ansible.pf }
+    - { role: ansible.pf_blockiplist }
     - { role: ansible.openvpn , openvpn_instance: "{{ openvpn_instance_home}}" , openvpn_instance_name: home , tags: [ 'openvpn' ]}
     - { role: ansible.openvpn , openvpn_instance: "{{ openvpn_instance_warrior}}" , openvpn_instance_name: warrior , tags: [ 'openvpn' ]}
     - { role: ansible.transmission , tags: [ 'transmission' ] }
