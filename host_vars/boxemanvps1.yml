@@ -198,14 +198,16 @@ nginx_config: |
       }
     }
     server {
-      #fucking hole
       listen 443 ssl default_server;
       server_name 94.242.58.41;
       access_log logs/default_ssl_access.log;
       error_log logs/default_ssl_error.log error;
       ssl_certificate_key /etc/ssl/private/nginx_default_ssl.key;
       ssl_certificate /etc/ssl/nginx_default_ssl.crt;
-      return 444;
+      root         /var/www/htdocs;
+      location / {
+        root /var/www/htdocs;
+      }
     }
     server {
       listen 443 ssl http2;

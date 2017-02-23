@@ -1,0 +1,6 @@
+---
+- hosts: zabbix
+  become: yes
+  roles:
+     - { role: geerlingguy.apache }
+     - { role: ansible-zabbix-server }

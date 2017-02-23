@@ -1,0 +1,6 @@
+---
+zabbix_url: zabbix1.home
+zabbix_timezone: 'Europe/Paris'
+zabbix_database_type: pgsql
+zabbix_database_type_long: postgresql
+server_dbport: 5432
