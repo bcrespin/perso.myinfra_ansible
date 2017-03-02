@@ -22,12 +22,14 @@
 
 - hosts: OS_OpenBSD
   tasks:
-    - openbsd_pkg: name={{ item }} state=present
-      with_items: "{{ my_os_packages|default('') }}"
+    - name: os packages
+      openbsd_pkg: name={{ item }} state=present
+      with_items: "{{ my_os_packages|default([]) }}"
       tags: [ 'pkg' ]
 
-    - openbsd_pkg: name={{ item }} state=present
-      with_items: "{{ my_grp_packages|default('') }}"
+    - name: group packages
+      openbsd_pkg: name={{ item }} state=present
+      with_items: "{{ my_grp_packages|default([]) }}"
       tags: [ 'pkg' ]
 
     - name: download openup
