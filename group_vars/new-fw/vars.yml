@@ -122,11 +122,14 @@ dhcpd_hosts:
     address: '172.31.1.4'
     ethernet: 'bc:5f:f4:fe:54:37'
   - hostname: "webcam1"
-    ethernet: 'e0:b9:4d:ed:9b:44'
+    ethernet: 'e0:b9:4d:ed:ab:5a'
     address: '172.31.200.11'
   - hostname: "webcam2"
     ethernet: 'e0:b9:4d:88:03:9f'
     address: '172.31.200.12'
+  - hostname: "webcam3"
+    address: '172.31.200.13'
+    ethernet: 'e0:b9:4d:88:0a:04'
   - hostname: "rz800"
     ethernet: '00:09:b0:db:42:9e'
     address: '172.31.1.14'
@@ -182,6 +185,7 @@ zone_home:
     - { name: "fw3" , type: A , rdata: "172.31.2.131" }
     - { name: "webcam1" , type: A , rdata: "172.31.200.11" }
     - { name: "webcam2" , type: A , rdata: "172.31.200.12" }
+    - { name: "webcam3" , type: A , rdata: "172.31.200.13" }
     - { name: "kms-dmz" , type: A , rdata: "172.31.200.100" }
     - { name: "ap1" , type: CNAME , rdata: "m00180ad4fac0" }
     - { name: "old_aumenucesoir" , type: CNAME , rdata: "jwebphp1" }
@@ -409,6 +413,7 @@ openvpn_instance_warrior:
     - "{{ vault_common_users.brice_apr1_user }}"
   openvpn_server_options:
     - 'push "dhcp-option DNS 172.31.2.131"'
+    - 'push "dhcp-option DOMAIN home"'
     - 'push "route 172.31.0.0 255.255.0.0"'
     - 'push "route 172.30.0.0 255.255.0.0"'
     - 'push "route 10.99.0.0 255.255.0.0"'

@@ -52,6 +52,10 @@
       when: openup_do_update|default(false)
       tags: ['openup']
 
+#- hosts: bignas-jails
+#  roles:
+#    - ansible-zabbix-agent
+
 - hosts: bignas-webgw
   gather_facts: False
   roles:

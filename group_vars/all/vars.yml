@@ -79,7 +79,7 @@ pxe_images_os:
    append: "setkmap=fr netboot=http://bignas:8080/pxe/srcd/sysrcd.dat initrd=images/srcd/initram.igz"
  - name: "Windows 7/8.1 (Installation)"
    kernel: "memdisk"
-   inird: "http://bignas:8080/pxe/winpex86/winpe_x86.iso"
+   initrd: "http://bignas:8080/pxe/winpex86/winpe_x86.iso"
    append: "iso raw"
  - name: "ESXi 5.5 update 2 (Installation)"
    kernel: "memdisk"
