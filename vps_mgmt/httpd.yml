@@ -5,6 +5,9 @@
 - name: Gathering info
   action: setup
 
+- name: install nginx
+  openbsd_pkg: name='nginx--' state=present
+  
 - name: nginx authfile
   lineinfile: " dest=/var/www/{{ ansible_host}}/service/.htpasswd regexp='{{ item.name }}' line='{{ item.name }}:{{ item.password }}' create=yes  owner=root group=wheel "
   with_items:

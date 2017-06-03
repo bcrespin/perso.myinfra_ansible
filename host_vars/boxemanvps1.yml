@@ -11,6 +11,10 @@ sshd_config:
   PermitRootLogin: without-password
   UseDNS: 'no'
 sshd_banner_enable: 'false'
+
+letsencrypt_domains:
+  - name: "{{ ssl_register_domain_name }}"
+
   
 #ip_forward_enable: true
 #ip_forward_sysctl_value: net.inet.ip.forwarding
@@ -214,8 +218,8 @@ nginx_config: |
       server_name {{ ansible_host }};
       root /var/www/{{ ansible_host }};
 
-      ssl_certificate_key /etc/ssl/acme/private/privkey.pem;
-      ssl_certificate /etc/ssl/acme/fullchain.pem;
+      ssl_certificate_key /etc/ssl/private/{{ ssl_register_domain_name }}.key;
+      ssl_certificate /etc/ssl/{{ ssl_register_domain_name }}.fullchain.pem;
       ssl_protocols TLSv1.2;
       ssl_ciphers EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH;
       ssl_prefer_server_ciphers on;

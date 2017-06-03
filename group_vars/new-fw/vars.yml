@@ -136,6 +136,9 @@ dhcpd_hosts:
   - hostname: "mdmycloudmirror"
     ethernet: '00:90:a9:ef:0f:ec'
     address: '172.31.1.13'
+  - hostname: "ap-cisco-1"
+    ethernet: '88:5a:92:13:8c:6d'
+    address: '172.31.1.16'
 
 zone_home:
   ns:
@@ -159,6 +162,7 @@ zone_home:
     - { name: "wdmycloudmirror" , type: A , rdata: "172.31.1.13" }
     - { name: "rz800" , type: A , rdata: "172.31.1.14" }
     - { name: "zabbix1" , type: A , rdata: "172.31.1.15" }
+    - { name: "ap-cisco-1", type: A , rdata: "172.31.1.16" }
     - { name: "mon1" , type: A , rdata: "172.31.1.20" }
     - { name: "jgit1" , type: A , rdata: "172.31.1.32" }
     - { name: "jmysql1" , type: A , rdata: "172.31.1.33" }

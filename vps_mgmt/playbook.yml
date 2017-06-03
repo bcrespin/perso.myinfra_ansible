@@ -2,6 +2,7 @@
   hosts: boxemanvps1
   gather_facts: true
   roles:
+    - { role: ansible.acme-client }
     - { role: ansible.pf }
     - { role: ansible.pf_blockiplist }
     - { role: ansible.openvpn , openvpn_instance: "{{ openvpn_instance_home}}" , openvpn_instance_name: home , tags: [ 'openvpn' ]}
@@ -11,8 +12,8 @@
     - include: common.yml
       tags: [ 'common' ]
 
-    - include: letsencrypt.yml
-      tags: [ 'letsencrypt' ]
+#    - include: letsencrypt.yml
+#      tags: [ 'letsencrypt' ]
 
     - include: httpd.yml
       tags: [ 'httpd' ]
@@ -20,11 +21,11 @@
     - include: nfs.yml
       tags: ['nfs']
     
-    - name: crontab for disk usage
-      cron:
-        name: "run command for disk usage"
-        hour: "*"
-        minute: "*/10"
-        job: "( date > /var/www/{{ ssl_register_domain_name }}/service/disk.txt ); ( df -h |grep -v 127.0.0.1 >> /var/www/{{ ssl_register_domain_name }}/service/disk.txt )"
-      tags: [ 'diskmon']
+#    - name: crontab for disk usage
+#      cron:
+#        name: "run command for disk usage"
+#        hour: "*"
+#        minute: "*/10"
+#        job: "( date > /var/www/{{ ssl_register_domain_name }}/service/disk.txt ); ( df -h |grep -v 127.0.0.1 >> /var/www/{{ ssl_register_domain_name }}/service/disk.txt )"
+#      tags: [ 'diskmon']
 
