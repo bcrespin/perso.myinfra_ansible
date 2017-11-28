@@ -6,7 +6,14 @@ sshd_config:
 
 resolv_nameservers:
   - 127.0.0.1
-  - 172.31.2.150
+  - 172.31.2.131
+
+my_groups:
+  homeusers: "{{ common_groups.homeusers }}"
+
+my_users:
+  brice: "{{ common_users.brice_freebsd }}"
+  vickie: "{{ common_users.caroline_freebsd }}"
 
 nginx_user: 'www'
 log_format:

@@ -110,11 +110,6 @@ dhcpd_hosts:
   - hostname: 'xbox'
     ethernet: '00:50:f2:8a:35:2e'
     address: '172.31.1.203'
-  - hostname: 'nuc'
-    address: '172.31.1.205'
-    ethernet:
-      - '00:21:5d:da:9b:88'
-      - 'c8:f7:33:8b:58:F8'
   - hostname: 'm00180ad4fac0'
     address: '172.31.1.2'
     ethernet: '00:18:0a:d4:fa:c0'
@@ -146,7 +141,7 @@ zone_home:
 #  mx:
 #    - { priority: 10,  rdata: "fw3.home." }
   records:
-    - { name: "_vlmcs._tcp" , type: SRV , rdata: "10 0 61688 kms-dmz" }
+    - { name: "_vlmcs._tcp" , type: SRV , rdata: "10 0 61688 kms-dmz.home." }
     - { name: "switch1" , type: A , rdata: "172.31.1.1" }
     - { name: "m00180ad4fac0" , type: A , rdata: "172.31.1.2" }
     - { name: "fwasa1" , type: A , rdata: "172.31.1.3" }
@@ -180,7 +175,6 @@ zone_home:
     - { name: "pchc" , type: A , rdata: "172.31.1.201" }
     - { name: "pc-brice" , type: A , rdata: "172.31.1.202" }
     - { name: "xbox" , type: A , rdata: "172.31.1.203" }
-    - { name: "nuc" , type: A , rdata: "172.31.1.205" }
     - { name: "switch2" , type: A , rdata: "172.31.1.252" }
     - { name: "switch3" , type: A , rdata: "172.31.1.253" }
     - { name: "fw-vip" , type: A , rdata: "172.31.2.150" }
@@ -258,7 +252,6 @@ zone_172_31_1_static_rev:
     - { name: "201" , type: PTR , rdata: "pchc.home." }
     - { name: "202" , type: PTR , rdata: "pc-brice.home." }
     - { name: "203" , type: PTR , rdata: "xbox.home." }
-    - { name: "205" , type: PTR , rdata: "nuc.home." }
     - { name: "252" , type: PTR , rdata: "switch2.home." }
     - { name: "253" , type: PTR , rdata: "switch3.home." }
 
@@ -335,6 +328,14 @@ bind_zones:
     type: stub
     parameters:
       - 'masters { 172.30.0.11; 172.30.0.12; }'
+
+  - name: 'test.local'
+    type: forward
+    forwarders: ['172.31.4.2']
+
+  - name: "4.31.172.in-addr.arpa"
+    type: forward
+    forwarders: ['172.31.4.2']
 
   - name: "1.99.10.in-addr.arpa"
     type: forward

@@ -12,8 +12,8 @@
     - include: common.yml
       tags: [ 'common' ]
 
-#    - include: letsencrypt.yml
-#      tags: [ 'letsencrypt' ]
+    - include: letsencrypt.yml
+      tags: [ 'letsencrypt' ]
 
     - include: httpd.yml
       tags: [ 'httpd' ]

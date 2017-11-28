@@ -56,10 +56,10 @@
 #  roles:
 #    - ansible-zabbix-agent
 
-- hosts: bignas-webgw
-  gather_facts: False
-  roles:
-    - ansible.nginx
+#- hosts: bignas-webgw
+#  gather_facts: False
+#  roles:
+#    - ansible.nginx
 
 - hosts: bignas
   gather_facts: False

@@ -2,30 +2,28 @@
 - name: restricted httpd to register first time letsencrypt cert
   copy: content={{ openbsd_httpd_config_letsencrypt_only }} dest=/etc/http_letsencrypt_only.conf owner=root group=wheel mode=0755
 
-- name: prepare acme folders
-  file: name={{ item.folder }} owner=root group=wheel mode={{ item.mode }} state=directory
-  with_items:
-    - { folder: '/etc/acme' , mode: '0700' }
-    - { folder: '/etc/ssl/acme' , mode: '0700' }
-    - { folder: '/etc/ssl/acme/private' , mode:  '0700' }
-    - { folder: '/var/www/htdocs/acme' , mode: '0755' }
+#- name: prepare acme folders
+#  file: name={{ item.folder }} owner=root group=wheel mode={{ item.mode }} state=directory
+#  with_items:
+#    - { folder: '/etc/acme' , mode: '0700' }
+#    - { folder: '/etc/ssl/acme' , mode: '0700' }
+#    - { folder: '/etc/ssl/acme/private' , mode:  '0700' }
+#    - { folder: '/var/www/htdocs/acme' , mode: '0755' }
 
-- name: download and build and install acme-client
-  shell: ftp '{{ acme_client_url }}/{{ acme_client_version }}.zip' && unzip {{ acme_client_version }}.zip &&  cd acme-client-{{ acme_client_version }} && make && make install
-  args:
-    chdir: /root
-    creates: /root/acme-client-{{ acme_client_version }}
+#- name: download and build and install acme-client
+#  shell: ftp '{{ acme_client_url }}/{{ acme_client_version }}.zip' && unzip {{ acme_client_version }}.zip &&  cd acme-client-{{ acme_client_version }} && make && make install
+#  args:
+#    chdir: /root
+#    creates: /root/acme-client-{{ acme_client_version }}
 
 - name: initial run of letsencrypt / acme
-  shell: httpd -f /etc/http_letsencrypt_only.conf && /usr/local/bin/acme-client -Nn -C /var/www/htdocs/acme -c /etc/ssl/acme -k /etc/ssl/acme/private/privkey.pem -f /etc/acme/privkey.pem {{ ssl_register_domain_name }} &&  pkill httpd
-  args:
-    creates: /etc/ssl/acme/private/privkey.pem
+  shell: httpd -f /etc/http_letsencrypt_only.conf && /usr/sbin/acme-client -AD {{ ssl_register_domain_name }} &&  pkill httpd
   when: ssl_register_domain_name is defined
 
 - name: letsencrypt schedule and nginx reload if necessary
   cron:
     name: acme-client for {{ ssl_register_domain_name }}
-    job: "/usr/local/bin/acme-client -C /var/www/htdocs/acme {{ ssl_register_domain_name }} && rcctl reload  nginx"
+    job: "/usr/sbin/acme-client  {{ ssl_register_domain_name }} && rcctl reload  nginx"
     minute: "0"
     hour: "5"
     day: "*"
