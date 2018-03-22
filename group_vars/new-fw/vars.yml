@@ -69,6 +69,17 @@ dhcpd_shared_networks:
       option domain-name "home";
       option domain-name-servers 172.31.2.131;
       filename "lpxelinux.0";
+  - name: "domotique"
+    subnets: '{{ dhcpd_subnet_domotique }}'
+    options: |
+      option domain-name-servers 172.31.69.254;
+dhcpd_subnet_domotique:
+  - subnet: "172.31.69.0"
+    netmask: "255.255.255.0"
+    routers: "172.31.69.254"
+    pools:
+      - comment: 'range for domotique'
+        range: '172.31.69.32 172.31.69.63'
 dhcpd_subnet_dmz_insecure:
   - subnet: "172.31.200.0"
     netmask: "255.255.255.0"
@@ -92,9 +103,9 @@ dhcpd_subnets_local:
       - comment: 'second range'
         range: '172.31.1.210 172.31.1.240'
 dhcpd_hosts:
-  - hostname: 'switch2'
+  - hostname: 'switch4'
     ethernet: '10:da:43:07:77:2e'
-    address: '172.31.1.252'
+    address: '172.31.1.3'
   - hostname: 'switch3'
     ethernet: '88:15:44:e3:42:2b'
     address: '172.31.1.253'
@@ -125,8 +136,10 @@ dhcpd_hosts:
   - hostname: "webcam3"
     address: '172.31.200.13'
     ethernet: 'e0:b9:4d:88:0a:04'
-  - hostname: "rz800"
-    ethernet: '00:09:b0:db:42:9e'
+  - hostname: "tx-rz800"
+    ethernet: 
+      - '00:09:b0:db:42:9e'
+      - '00:09:b0:a9:0b:ea'
     address: '172.31.1.14'
   - hostname: "mdmycloudmirror"
     ethernet: '00:90:a9:ef:0f:ec'
@@ -144,9 +157,9 @@ zone_home:
     - { name: "_vlmcs._tcp" , type: SRV , rdata: "10 0 61688 kms-dmz.home." }
     - { name: "switch1" , type: A , rdata: "172.31.1.1" }
     - { name: "m00180ad4fac0" , type: A , rdata: "172.31.1.2" }
-    - { name: "fwasa1" , type: A , rdata: "172.31.1.3" }
+    - { name: "switch4" , type: A , rdata: "172.31.1.3" }
     - { name: "ipmi-bignas" , type: A , rdata: "172.31.1.4" }
-    - { name: "asav1" , type: A , rdata: "172.31.1.5" }
+    - { name: "jeedom1" , type: A , rdata: "172.31.1.5" }
     - { name: "esxi1" , type: A , rdata: "172.31.1.6" }
     - { name: "asav2" , type: A , rdata: "172.31.1.7" }
     - { name: "esxi2" , type: A , rdata: "172.31.1.8" }
@@ -155,7 +168,7 @@ zone_home:
     - { name: "ansible1" , type: A , rdata: "172.31.1.11" }
     - { name: "esxi2-gns3" , type: A , rdata: "172.31.1.12" }
     - { name: "wdmycloudmirror" , type: A , rdata: "172.31.1.13" }
-    - { name: "rz800" , type: A , rdata: "172.31.1.14" }
+    - { name: "tx-rz800" , type: A , rdata: "172.31.1.14" }
     - { name: "zabbix1" , type: A , rdata: "172.31.1.15" }
     - { name: "ap-cisco-1", type: A , rdata: "172.31.1.16" }
     - { name: "mon1" , type: A , rdata: "172.31.1.20" }
@@ -222,9 +235,9 @@ zone_172_31_1_static_rev:
   records:
     - { name: "1" , type: PTR , rdata: "switch1.home." }
     - { name: "2" , type: PTR , rdata: "ap1.home." }
-    - { name: "3" , type: PTR , rdata: "fwasa1.home." }
+    - { name: "3" , type: PTR , rdata: "switch4.home." }
     - { name: "4" , type: PTR , rdata: "ipmi-bignas.home." }
-    - { name: "5" , type: PTR , rdata: "asav1.home." }
+    - { name: "5" , type: PTR , rdata: "jeedom1.home." }
     - { name: "6" , type: PTR , rdata: "esxi1.home." }
     - { name: "7" , type: PTR , rdata: "asav2.home." }
     - { name: "8" , type: PTR , rdata: "esxi2.home." }
@@ -262,7 +275,6 @@ zone_172_31_1_rev:
     - { name: "$GENERATE 97-209 $" ,type: CNAME , rdata: "$.static.1.31.172.in-addr.arpa." }
     - { name: "$GENERATE 210-240 $" ,type: CNAME, rdata: "$.1.31.172.dhcp.1.31.172.in-addr.arpa." }
     - { name: "$GENERATE 241-254 $" ,type: CNAME , rdata: "$.static.1.31.172.in-addr.arpa." }
-
 zone_rzp_static_dhcp: "{{ vault_zone_rzp_static_dhcp }}"
 bind_blackhole_malwaredomain_blocklist_url: 'http://mirror2.malwaredomains.com/files/justdomains'
 bind_zone_loopback_v6_enable: False
@@ -275,7 +287,7 @@ bind_options_allow_recursion: ['goodclients']
 bind_options_allow_query: ['goodclients']
 bind_options_additionals:
   - 'response-policy { zone "rzp-static-dhcp"; }'
-bind_options_listen_ipv4: [ '127.0.0.1' ,'172.31.2.131']
+bind_options_listen_ipv4: [ '127.0.0.1' ,'172.31.2.131', '172.31.69.254']
 bind_logging_channels:
   - name: default
     out: syslog daemon

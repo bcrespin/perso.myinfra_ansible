@@ -41,6 +41,10 @@ pf_blockiplist_pf_table: "blacklist"
 pf_role_enable: True
 pf_ftpproxy_enable: True
 pf_ip_forward_enable: True
+pf_tables:
+  - name: 'some french IPv4 ranges'
+    dest: '/etc/pf_tables/pf.table.fr_ip_range'
+    content: "{{ lookup('file','/etc/ansible/ressources/pf.table.fr_ip_range') }}"
 pf_file_content: |
   # ansible managed, do not edit by hand !
   ##########################################
@@ -52,6 +56,7 @@ pf_file_content: |
   vpn_warrior="{{ openvpn_instance_warrior.openvpn_dev }}"
   table <internet-dns> { 8.8.8.8, 8.8.4.4 }
   table <{{ pf_blockiplist_pf_table }}>
+  table <FR_IP_RANGE>  persist file '/etc/pf_tables/pf.table.fr_ip_range'
   #  table <lan_openvpn_home_site> { 172.31.1.20 , 172.31.5.100 }
   table <lan_openvpn_home_site> { 172.31.2.131 , 172.31.1.0/24 }
   table <bruteforce> persist
@@ -62,7 +67,8 @@ pf_file_content: |
   p2p_ports_localhost= "{ 55413 }"
   ssh_port_localhost= 65522
   http_ports_localhost= "{ 80,443 }"
-
+  kms_port_tohome="61688"
+  kms_host="172.31.200.100"
   ##global
   ################
   set skip on lo
@@ -79,7 +85,7 @@ pf_file_content: |
  
   ## rdr rules
   #pass in quick on $main proto udp from any to $main:0  port $p2p_redirect_udp_ports_host1 rdr-to $p2p_host1 tag REDIRECT_PORT_TO_VPN
-  #pass in quick on $main proto tcp from any to $main:0  port $p2p_redirect_tcp_ports_host1 rdr-to $p2p_host1 tag REDIRECT_PORT_TO_VPN 
+  #pass in quick on $main proto tcp from any to $main:0  port $p2p_redirect_tcp_ports_host1 rdr-to $p2p_host1 tag REDIRECT_PORT_TO_VPN  pass in quick on $main proto tcp from <FR_IP_RANGE> to $main:0 port $kms_port_tohome rdr-to $kms_host tag REDIRECT_PORT_TO_VPN
  
   ##fw rules
   ################
@@ -132,12 +138,13 @@ openvpn_instance_home:
   openvpn_server_options:
      - "route 172.31.2.131 255.255.255.255"
      - "route 172.31.1.0 255.255.255.0"
+     - "route 172.31.200.100 255.255.255.255"
   openvpn_clients_config:
    'home2vps':
      content: |
        iroute 172.31.2.131 255.255.255.255
        iroute 172.31.1.0 255.255.255.0
-
+       iroute 172.31.200.100 255.255.255.255
 openvpn_instance_warrior:
   openvpn_clients_fetch_datas: True
   openvpn_auth: 'SHA512'

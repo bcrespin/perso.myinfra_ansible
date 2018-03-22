@@ -3,7 +3,7 @@ sshd_banner_enable: 'false'
 sshd_config:
   PermitRootLogin: 'yes'
   UseDNS: 'no'
-ntp_config_server : [fw1.home , fw2.home]
+ntp_config_server : [fw3.home]
 resolv_nameservers:
   - 171.31.2.131
   - 172.31.1.200
