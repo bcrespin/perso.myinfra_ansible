@@ -171,6 +171,7 @@ zone_home:
     - { name: "tx-rz800" , type: A , rdata: "172.31.1.14" }
     - { name: "zabbix1" , type: A , rdata: "172.31.1.15" }
     - { name: "ap-cisco-1", type: A , rdata: "172.31.1.16" }
+    - { name: "esxi3", type: A , rdata: "172.31.1.17" }
     - { name: "mon1" , type: A , rdata: "172.31.1.20" }
     - { name: "jgit1" , type: A , rdata: "172.31.1.32" }
     - { name: "jmysql1" , type: A , rdata: "172.31.1.33" }
@@ -209,6 +210,7 @@ zone_home:
     - { name: "bignas.nfs" , type: A , rdata: "172.30.1.200" }
     - { name: "esxi1.nfs" , type: A , rdata: "172.30.1.1" }
     - { name: "esxi2.nfs" , type: A , rdata: "172.30.1.2" }
+    - { name: "esxi3.nfs" , type: A , rdata: "172.30.1.3" }
     - { name: "storage1.nfs" , type: A , rdata: "172.30.1.13" }
 
 zone_172_31_2_rev:
@@ -229,6 +231,7 @@ zone_172_30_1_rev:
     - { name: "200" , type: PTR , rdata: "bignas.nfs.home." }
     - { name: "1" , type: PTR , rdata: "esxi1.nfs.home." }
     - { name: "2" , type: PTR , rdata: "esxi2.nfs.home." }
+    - { name: "3" , type: PTR , rdata: "esxi3.nfs.home." }
     - { name: "13" , type: PTR , rdata: "storage1.nfs.home." }
 
 zone_172_31_1_static_rev:
@@ -248,6 +251,8 @@ zone_172_31_1_static_rev:
     - { name: "13" , type: PTR , rdata: "wdmycloudmirror.home." }
     - { name: "14" , type: PTR , rdata: "rz800.home." }
     - { name: "15" , type: PTR , rdata: "zabbix1.home." }
+    - { name: "16" , type: PTR , rdata: "ap-cisco-1.home." }
+    - { name: "17" , type: PTR , rdata: "esxi3.home." }
     - { name: "20" , type: PTR , rdata: "mon1.home." }
     - { name: "32" , type: PTR , rdata: "jgit1.home." }
     - { name: "33" , type: PTR , rdata: "jmysql1.home." }
