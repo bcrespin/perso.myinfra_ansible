@@ -88,6 +88,18 @@ dhcpd_subnet_dmz_insecure:
       - comment: 'range for dmz'
         range: '172.31.200.100 172.31.200.199'
 dhcpd_subnets_local:
+  - subnet: "172.31.4.0"
+    netmask: '255.255.255.0'
+    routers: '172.31.4.254'
+    options: |
+      ddns-domainname "home.dhcp.";
+      ddns-rev-domainname "4.31.172.in-addr.arpa.";
+      ignore client-updates;
+    pools:
+      - comment: 'first range'
+        range: '172.31.4.64 172.31.4.96'
+      - comment: 'second range'
+        range: '172.31.4.210 172.31.4.240'
   - subnet: "172.31.2.128"
     netmask: "255.255.255.224"
   - subnet: "172.31.1.0"
@@ -121,9 +133,6 @@ dhcpd_hosts:
   - hostname: 'xbox'
     ethernet: '00:50:f2:8a:35:2e'
     address: '172.31.1.203'
-  - hostname: 'm00180ad4fac0'
-    address: '172.31.1.2'
-    ethernet: '00:18:0a:d4:fa:c0'
   - hostname: 'ipmi-bignas'
     address: '172.31.1.4'
     ethernet: 'bc:5f:f4:fe:54:37'
@@ -156,7 +165,6 @@ zone_home:
   records:
     - { name: "_vlmcs._tcp" , type: SRV , rdata: "10 0 61688 kms-dmz.home." }
     - { name: "switch1" , type: A , rdata: "172.31.1.1" }
-    - { name: "m00180ad4fac0" , type: A , rdata: "172.31.1.2" }
     - { name: "switch4" , type: A , rdata: "172.31.1.3" }
     - { name: "ipmi-bignas" , type: A , rdata: "172.31.1.4" }
     - { name: "jeedom1" , type: A , rdata: "172.31.1.5" }
@@ -199,7 +207,6 @@ zone_home:
     - { name: "webcam2" , type: A , rdata: "172.31.200.12" }
     - { name: "webcam3" , type: A , rdata: "172.31.200.13" }
     - { name: "kms-dmz" , type: A , rdata: "172.31.200.100" }
-    - { name: "ap1" , type: CNAME , rdata: "m00180ad4fac0" }
     - { name: "old_aumenucesoir" , type: CNAME , rdata: "jwebphp1" }
     - { name: "pkg" , type: CNAME , rdata: "bignas" }
     - { name: "pkg-centos" , type: CNAME , rdata: "bignas" }
@@ -237,7 +244,6 @@ zone_172_30_1_rev:
 zone_172_31_1_static_rev:
   records:
     - { name: "1" , type: PTR , rdata: "switch1.home." }
-    - { name: "2" , type: PTR , rdata: "ap1.home." }
     - { name: "3" , type: PTR , rdata: "switch4.home." }
     - { name: "4" , type: PTR , rdata: "ipmi-bignas.home." }
     - { name: "5" , type: PTR , rdata: "jeedom1.home." }
@@ -332,7 +338,11 @@ bind_zones:
 
   - name: 'vmlab.lan'
     type: forward
-    forwarders: ['172.30.0.11','172.30.0.12']
+    forwarders: ['172.30.0.11']
+
+  - name: 'ccomptes.vmlab.lan'
+    type: forward
+    forwarders: ['10.207.100.1']
 
   - name: 'home'
     type: master
@@ -346,14 +356,10 @@ bind_zones:
     parameters:
       - 'masters { 172.30.0.11; 172.30.0.12; }'
 
-  - name: 'test.local'
+  - name: 'home.test'
     type: forward
-    forwarders: ['172.31.4.2']
-
-  - name: "4.31.172.in-addr.arpa"
-    type: forward
-    forwarders: ['172.31.4.2']
-
+    forwarders: ['172.30.3.1']
+ 
   - name: "1.99.10.in-addr.arpa"
     type: forward
     forwarders: ['172.30.0.11','172.30.0.12']
@@ -365,6 +371,10 @@ bind_zones:
   - name: "0.30.172.in-addr.arpa"
     type: forward
     forwarders: ['172.30.0.11','172.30.0.12']
+
+  - name: "3.30.172.in-addr.arpa"
+    type: forward
+    forwarders: ['172.30.3.1']
 
   - name: "1.30.172.in-addr.arpa"
     type: master
@@ -399,6 +409,14 @@ bind_zones:
     managed: true
     content: "{{ zone_172_31_1_static_rev }}"
     parameters:
+      - 'also-notify  { 172.31.1.200; }'
+
+  - name: "4.31.172.in-addr.arpa"
+    type: master
+    managed: false
+    dynamic: true
+    parameters:
+      - 'allow-update { key "ddns-key"; }'
       - 'also-notify  { 172.31.1.200; }'
 
   - name: "dhcp.1.31.172.in-addr.arpa"
