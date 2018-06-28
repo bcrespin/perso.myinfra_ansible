@@ -73,6 +73,30 @@ dhcpd_shared_networks:
     subnets: '{{ dhcpd_subnet_domotique }}'
     options: |
       option domain-name-servers 172.31.69.254;
+  - name: "wifi_test"
+    subnets: '{{ dhcpd_subnet_wifi_test }}'
+    options: |
+      option domain-name "home";
+      option domain-name-servers 172.31.2.131;
+      filename "lpxelinux.0";
+  - name: "firewall_lan"
+    subnets: '{{ dhcpd_subnet_firewall }}'
+dhcpd_subnet_wifi_test:
+  - subnet: "172.31.4.0"
+    netmask: '255.255.255.0'
+    routers: '172.31.4.254'
+    options: |
+      ddns-domainname "home.dhcp.";
+      ddns-rev-domainname "4.31.172.in-addr.arpa.";
+      ignore client-updates;
+    pools:
+      - comment: 'first range'
+        range: '172.31.4.64 172.31.4.96'
+      - comment: 'second range'
+        range: '172.31.4.210 172.31.4.240'
+dhcpd_subnet_firewall:
+  - subnet: "172.31.2.128"
+    netmask: "255.255.255.224"
 dhcpd_subnet_domotique:
   - subnet: "172.31.69.0"
     netmask: "255.255.255.0"
@@ -88,20 +112,6 @@ dhcpd_subnet_dmz_insecure:
       - comment: 'range for dmz'
         range: '172.31.200.100 172.31.200.199'
 dhcpd_subnets_local:
-  - subnet: "172.31.4.0"
-    netmask: '255.255.255.0'
-    routers: '172.31.4.254'
-    options: |
-      ddns-domainname "home.dhcp.";
-      ddns-rev-domainname "4.31.172.in-addr.arpa.";
-      ignore client-updates;
-    pools:
-      - comment: 'first range'
-        range: '172.31.4.64 172.31.4.96'
-      - comment: 'second range'
-        range: '172.31.4.210 172.31.4.240'
-  - subnet: "172.31.2.128"
-    netmask: "255.255.255.224"
   - subnet: "172.31.1.0"
     netmask: '255.255.255.0'
     routers: '172.31.1.1'
