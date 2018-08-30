@@ -124,6 +124,7 @@ openvpn_instance_home:
   openvpn_host: '{{ ansible_host }}'
   openvpn_auth: 'SHA512'
   openvpn_dev: tun1
+  openvpn_tls_cipher: 'ECDHE-RSA-CHACHA20-POLY1305'
   openvpn_topology: subnet
   openvpn_port: '{{ openvpn_instance_home_port }}'
   openvpn_max_clients: 4
@@ -146,6 +147,7 @@ openvpn_instance_home:
        iroute 172.31.1.0 255.255.255.0
        iroute 172.31.200.100 255.255.255.255
 openvpn_instance_warrior:
+  openvpn_tls_cipher: 'ECDHE-RSA-CHACHA20-POLY1305'
   openvpn_clients_fetch_datas: True
   openvpn_auth: 'SHA512'
   openvpn_host: '{{ ansible_host }}'

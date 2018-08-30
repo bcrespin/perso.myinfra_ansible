@@ -190,7 +190,7 @@ zone_home:
     - { name: "zabbix1" , type: A , rdata: "172.31.1.15" }
     - { name: "ap-cisco-1", type: A , rdata: "172.31.1.16" }
     - { name: "esxi3", type: A , rdata: "172.31.1.17" }
-    - { name: "mon1" , type: A , rdata: "172.31.1.20" }
+    - { name: "mrouter" , type: A , rdata: "172.31.1.20" }
     - { name: "jgit1" , type: A , rdata: "172.31.1.32" }
     - { name: "jmysql1" , type: A , rdata: "172.31.1.33" }
     - { name: "jdownloader1" , type: A , rdata: "172.31.1.34" }
@@ -269,7 +269,7 @@ zone_172_31_1_static_rev:
     - { name: "15" , type: PTR , rdata: "zabbix1.home." }
     - { name: "16" , type: PTR , rdata: "ap-cisco-1.home." }
     - { name: "17" , type: PTR , rdata: "esxi3.home." }
-    - { name: "20" , type: PTR , rdata: "mon1.home." }
+    - { name: "20" , type: PTR , rdata: "mrouter.home." }
     - { name: "32" , type: PTR , rdata: "jgit1.home." }
     - { name: "33" , type: PTR , rdata: "jmysql1.home." }
     - { name: "34" , type: PTR , rdata: "jdownloader1.home." }
