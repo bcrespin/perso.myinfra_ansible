@@ -55,5 +55,9 @@
     - "default_ssl_error.log"
     - "{{ ansible_host }}_ssl_access.log"
     - "{{ ansible_host }}_ssl_error.log"
+    - "{{ libresonic_fqdn }}_ssl_access.log"
+    - "{{ libresonic_fqdn }}_ssl_error.log"
+    - "{{ nextcloud_fqdn }}_ssl_access.log"
+    - "{{ nextcloud_fqdn }}_ssl_error.log"
   tags: [ 'newsyslog']
 
